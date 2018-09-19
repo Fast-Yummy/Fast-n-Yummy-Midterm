@@ -1,0 +1,56 @@
+/* Nav Bar Styling */
+$font-stack: 'Roboto Condensed', sans-serif;
+$primary-color: #800000;
+$secondary-color: #999966;
+
+nav {
+
+  #nav-bar {
+
+    height: 100px;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    padding-left: 2em;
+    padding-right: 2em;
+    background-color: $primary-color;
+    color: $secondary-color;
+    font-family: $font-stack;
+  }
+
+  #nav-bar .header {
+
+    margin: 5px;
+    font-size: x-large;
+    line-height: 3;
+    float: left;
+    color: $secondary-color;
+  }
+
+  #nav-bar .logo {
+    float: left;
+    margin: 5px;
+    width: 80px;
+    height: 80px;
+  }
+
+  .nav-button {
+      background-color: #eee;
+      border: 1px solid grey;
+      border-radius: 5px;
+      padding: 15px 32px;
+      text-align: center;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+      float: right;
+      color: $primary-color;
+  }
+
+  .nav-button:hover {
+    color: black;
+    border: 2px solid black;
+  }
+}
