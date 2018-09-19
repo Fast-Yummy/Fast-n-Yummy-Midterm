@@ -40,9 +40,30 @@ app.use("/api/users", usersRoutes(knex));
 
 // Home page
 app.get("/", (req, res) => {
-  res.render("index");
+ res.render("index");
 });
+//Project Home Page
+app.get("/home", (req, res) => {
+ res.render("home");
+});
+
+//Menu Page
+app.get("/menu", (req, res) => {
+ res.render("menu");
+});
+
+//Confirmation Page
+app.get("/confirmation", (req, res) => {
+ res.render("confirmation");
+});
+
+//Status Page
+app.get("/status", (req, res) => {
+ res.render("status");
+});
+
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
 });
+
