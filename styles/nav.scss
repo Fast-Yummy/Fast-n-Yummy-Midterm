@@ -1,34 +1,29 @@
 /* Nav Bar Styling */
-$font-stack: 'Roboto Condensed', sans-serif;
+$font-stack: 'Tangerine', cursive;
 $primary-color: #800000;
 $secondary-color: #999966;
 
-nav {
+#nav-bar {
+  height: 100px;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  padding-left: 2em;
+  padding-right: 2em;
+  background-color: $primary-color;
+  color: $secondary-color;
+  font-family: $font-stack;
 
-  #nav-bar {
-
-    height: 100px;
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: 0;
-    padding-left: 2em;
-    padding-right: 2em;
-    background-color: $primary-color;
-    color: $secondary-color;
-    font-family: $font-stack;
-  }
-
-  #nav-bar .header {
-
+  .header {
     margin: 5px;
-    font-size: x-large;
-    line-height: 3;
+    font-size: 3em;
+    line-height: 2em;
     float: left;
     color: $secondary-color;
   }
 
-  #nav-bar .logo {
+  .logo {
     float: left;
     margin: 5px;
     width: 80px;
@@ -43,7 +38,7 @@ nav {
       text-align: center;
       display: inline-block;
       font-size: 16px;
-      margin: 4px 2px;
+      margin: 1em;
       cursor: pointer;
       float: right;
       color: $primary-color;
