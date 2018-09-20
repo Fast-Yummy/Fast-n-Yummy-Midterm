@@ -1,0 +1,56 @@
+/* Homepage Styling */
+
+$border: 1px solid lightgrey;
+$border-hover: 1px solid grey;
+$rounded: 5px;
+$padded: 1em;
+$primary-color: #800000;
+
+body {
+
+  background-color: #eee;
+  color: black;
+  margin-left: 2em;
+  margin-right: 2em;
+  margin-top: $padded;
+  margin-bottom: $padded;
+  padding-bottom: $padded;
+}
+
+.background-img {
+  width: auto;
+  height: auto;
+  margin: auto;
+  display: block;
+}
+
+.order-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  width: 300px;
+  height: 80px;
+  padding: $padded;
+  margin: 1em;
+
+  font-size: 3em;
+  background-color: #739900;
+  color: white;
+  border: 1px solid grey;
+  border-radius: 5px;
+  text-align: center;
+  cursor: pointer;
+
+}
+
+.order-button img {
+  width: 40px;
+  height: 40px;
+}
+
+.order-button:hover {
+  color: black;
+  border: 2px solid black;
+}
