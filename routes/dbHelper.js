@@ -1,12 +1,12 @@
-// const knex = require('knex')({
-//   client: 'pg',
-//   connection: {
-//     host: "localhost",
-//     user: 'labber',
-//     password: 'labber',
-//     database : 'midterm'
-//   }
-// });
+const knex = require('knex')({
+  client: 'pg',
+  connection: {
+    host: "localhost",
+    user: 'labber',
+    password: 'labber',
+    database : 'midterm'
+  }
+});
 
 
 module.exports = function databaseHelper(knex, Promise) {
@@ -63,11 +63,11 @@ module.exports = function databaseHelper(knex, Promise) {
 
     //add item to cart and return the updated cart
     addCart: function(orderid, foodid, cb) {
+      //SELECT orderid, foodid, COUNT(foodid) FROM order_food_item GROUP BY orderid,foodid;
       var qraw = 'orderid, foodid, COUNT(foodid) AS quantity';
       knex("order_food_item")
       .insert({orderid: orderid, foodid: foodid})
       .then( function(result) {
-        //SELECT orderid, foodid, COUNT(foodid) FROM order_food_item GROUP BY orderid,foodid;
         knex.select(knex.raw(qraw))
         .from('order_food_item')
         .where('orderid', '=', orderid)
@@ -103,25 +103,28 @@ module.exports = function databaseHelper(knex, Promise) {
       });
     },
 
-    //finalCart(orderid, cb)
-    finalCart: function(orderid, cb) {
-      var qraw = 'orderid, foodid, COUNT(foodid) AS quantity';
+    //summary(orderid, cb)
+    summary: function(orderid, cb) {
+      var qraw = 'order_food_item.foodid, COUNT(order_food_item.foodid) AS quantity, price, time';
       knex.select(knex.raw(qraw))
-      .from('order_food_item')
+      .from('order_food_item').innerJoin('fooditem', 'fooditem.foodid', 'order_food_item.foodid')
       .where('orderid', '=', orderid)
-      .groupBy('orderid', 'foodid')
+      .groupBy('order_food_item.foodid', 'price', 'time')
       .then(function(result) {
         cb(null,result);
       })
+
       .finally(function() {
         knex.destroy();
       });
     }
+
   };
 }
 
-
-
+//databaseHelper(knex, Promise).summary('dda1345', console.log);
+//SELECT order_food_item.foodid, COUNT(order_food_item.foodid) AS quantity, price, time FROM order_food_item JOIN fooditem ON fooditem.foodid = order_food_item.foodid
+//WHERE orderid = 'dda1345' GROUP BY order_food_item.foodid,price,time;
 
 
 /////////////////testing/////////////ignore///////////////////////////
