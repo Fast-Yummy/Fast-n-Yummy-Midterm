@@ -9,22 +9,22 @@ const knex = require('knex')({
   }
 });
 
-// function organizeOrderList(knex, Promise, orderID) {
-//   const cart = {};
-//   knex.select('orderID','foodID','COUNT(foodid)')
-//   .from('order_food_item')
-//   .where('orderID', '=', orderID)
-//   .then(function(result) {
-//     console.log(result);
-//     // knex(result).countDistinct({ quantity: 'foodID' }).then(function(result2) {
-//     //   console.log(result2);
-//     //})
-//     return;
-//   })
-//   .finally(function() {
-//     knex.destroy();
-//   });
-// }
+function organizeOrderList(knex, Promise, orderID) {
+  const cart = {};
+  knex.select('orderID','foodID','COUNT(foodid)')
+  .from('order_food_item')
+  .where('orderID', '=', orderID)
+  .then(function(result) {
+    console.log(result);
+    // knex(result).countDistinct({ quantity: 'foodID' }).then(function(result2) {
+    //   console.log(result2);
+    //})
+    return;
+  })
+  .finally(function() {
+    knex.destroy();
+  });
+}
 
 //module.exports =
 function databaseHelper(knex, Promise) {
@@ -101,4 +101,4 @@ function databaseHelper(knex, Promise) {
 
 // const itemList = [{orderid: "abc123", foodid: 4}];
 // databaseHelper(knex, Promise).addOrderItem(itemList);
-//organizeOrderList(knex, Promise, 'abc123');
+organizeOrderList(knex, Promise, 'abc123');
