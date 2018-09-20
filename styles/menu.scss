@@ -21,6 +21,17 @@ $padded: 1em;
   width: 33.33%;
 }
 
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+@media screen and (max-width: 600px) {
+    .column {
+        width: 100%;
+    }
+}
 
 .menu-item-img {
   margin: 5px;
@@ -69,4 +80,20 @@ $padded: 1em;
 
 #menu:hover .description {
   display: block;
+}
+
+
+
+
+
+
+
+
+
+
+
+@media screen and (max-width: 600px) {
+    .column {
+        width: 100%;
+    }
 }

@@ -1,10 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>Order Confirmation</title>
     <% include partials/_styles %>
-  </head>
 
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
   <body>
     <% include partials/_header %>
 
@@ -16,17 +29,14 @@
       <button class="payment-button" type="button"></i>Enter Payment Details</button>
       <section class="payment-form">
         <h3>Enter Payment Details</h3>
-        <h5 id="empty" class="error-message">Please fill out your details!</h5>
-        <form action="" method="POST" style="margin:150px;">
-        <label for="card">Credit Card:</label>
-          <input id="card" type="number" name="text" style="width: 300px">
-        <label for="phone">Phone Number:</label>
-          <input id="phone" type="number" name="phone">
-          <input type="submit" value="confirm">
-      </form>
+        <% include partials/_payment %>
       </section>
 
     </main>
     <footer class="footer">Copyright Fast'n'Yummy 2018</footer>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
   </body>
 </html>
