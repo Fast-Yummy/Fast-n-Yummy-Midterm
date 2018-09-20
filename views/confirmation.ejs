@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Order Confirmation</title>
+    <% include partials/_styles %>
+  </head>
+
+  <body>
+    <% include partials/_header %>
+
+    <main class="container">
+      <h3>Order Summary</h3>
+      <div>
+        <p>Order details will go here</p>
+      </div>
+      <button class="payment-button" type="button"></i>Enter Payment Details</button>
+      <section class="payment-form">
+        <h3>Enter Payment Details</h3>
+        <h5 id="empty" class="error-message">Please fill out your details!</h5>
+        <form action="" method="POST" style="margin:150px;">
+        <label for="card">Credit Card:</label>
+          <input id="card" type="number" name="text" style="width: 300px">
+        <label for="phone">Phone Number:</label>
+          <input id="phone" type="number" name="phone">
+          <input type="submit" value="confirm">
+      </form>
+      </section>
+
+    </main>
+    <footer class="footer">Copyright Fast'n'Yummy 2018</footer>
+  </body>
+</html>
