@@ -7,6 +7,7 @@ exports.up = function(knex, Promise) {
       table.string('category');
       table.string('description');
       table.string('img'); //image URL
+      table.integer('time').unsigned();
     }),
     knex.schema.createTable('orders', function(table){
       table.string('orderid').primary(); //browser cookie session ID is used for orderID
@@ -24,6 +25,5 @@ exports.down = function(knex, Promise) {
     knex.schema.dropTable('order_food_item'),
     knex.schema.dropTable('fooditem'),
     knex.schema.dropTable('orders')
-
   ])
 };
