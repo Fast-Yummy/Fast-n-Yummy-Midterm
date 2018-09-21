@@ -7,7 +7,7 @@ function createMenuItem(data) {
   const description = data.description;
   const category = data.category;
 
-  let $menu = $(`<section id="${id} menu">`).addClass(`col-md-4 ${category}`);
+  let $menu = $(`<section id="${id}">`).addClass(`col-md-4 ${category}`);
 
   let $header = $("<header>").addClass("menu-item-header");
   let $section = $("<div>").addClass("menu-body");
@@ -19,8 +19,8 @@ function createMenuItem(data) {
 
   let $description = $("<p>").text(description).addClass("description");
 
-  let $plus = $(`<button <i class="fas fa-plus">>`).addClass("add-sub");
-  let $minus = $(`<button <i class="fas fa-minus">>`).addClass("add-sub");
+  let $plus = $(`<button <i class="fas fa-plus">`).addClass("add-sub");
+  let $minus = $(`<button <i class="fas fa-minus">`).addClass("add-sub");
   let $price = $("<p>").addClass("price").append(price);
 
   $header.append($name);
@@ -45,26 +45,51 @@ $(document).ready(function() {
   const loadMenu = () => {
       $.ajax('/menu/load', { method: 'GET' })
       .then(function(data) {
-        console.log(data);
         renderMenu(data);
       });
   }
-  loadMenu();
 
-  $(".#menuContainer").on('click', '.fa-plus', function() {
-    const foodid;
-    const orderid;
-    $.ajax(
-    {
-      url: "/menu/add",
-      method: 'POST',
+  $("#menuContainer").on('click', '.fa-plus', function() {
+
+    let foodid = $(this).parent().parent().attr("id");
+    console.log(foodid);
+    //const orderid;
+    $.ajax("/menu/add",
+      { method: 'POST',
       data: {
         foodid: foodid,
         orderid: orderid
       }
-    })
+      }).then(function(response) {
+        console.log(response);
+      });
+
+
+
+  });
+
+  $("#menuContainer").on('click', '.fa-minus', function() {
+
+    let foodid = $(this).parent().parent().attr("id");
+    console.log(foodid);
+    //const orderid;
+    $.ajax("/menu/add",
+      { method: 'POST',
+      data: {
+        foodid: foodid,
+        orderid: orderid
+      }
+      }).then(function(response) {
+        console.log(response);
+      });
+
+
+
   });
 
 
 
-})
+  loadMenu();
+
+});
+
