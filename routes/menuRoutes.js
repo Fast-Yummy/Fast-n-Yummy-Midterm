@@ -1,19 +1,8 @@
 "use strict";
-
-const databaseHelper = require("./dbHelper.js")(knex, Promise);
-const knex = require('knex')({
-  client: 'pg',
-  connection: {
-    host: "localhost",
-    user: 'labber',
-    password: 'labber',
-    database : 'midterm'
-  }
-});
 const express = require('express');
 const menuRoutes  = express.Router();
 
-module.exports = (knex) => {
+module.exports = (databaseHelper) => {
   menuRoutes.post("/add", (req, res) => {
     const orderid = req.body.orderid;
     const foodid = req.body.foodid;
@@ -34,8 +23,8 @@ module.exports = (knex) => {
       }
     })
   });
-  menuRoutes.get("/menu", (req, res) => {
-    databaseHelper.loadMenu(orderid, (error, result) => {
+  menuRoutes.get("/load", (req, res) => {
+    databaseHelper.loadMenu((error, result) => {
       if (error) throw error;
       else {
         res.json(result);

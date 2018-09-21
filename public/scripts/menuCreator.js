@@ -1,11 +1,12 @@
 function createMenuItem(data) {
-  const id = ;
-  const name = ;
-  const price = ;
-  const img = ;
-  const description = ;
+  const id = data.foodid;
+  const name = data.name;
+  const price = data.price;
+  const img = data.img;
+  const description = data.description;
+  const category = data.category;
 
-  let $menu = $(`<section id="${id} menu">`).addClass("col-md-4");
+  let $menu = $(`<section id="${id} menu">`).addClass(`col-md-4 ${category}`);
 
   let $header = $("<header>").addClass("menu-item-header");
   let $section = $("<div>").addClass("menu-body");
@@ -29,3 +30,40 @@ function createMenuItem(data) {
 
   return $menu;
   }
+
+function renderMenu(menudata) {
+  for (let item of menudata) {
+    let $item = createMenuItem(item);
+    $('#menuContainer').append($item);
+  }
+}
+
+
+$(document).ready(function() {
+  console.log('ready to loading DOM');
+  const loadMenu = () => {
+      $.ajax('/menu/load', { method: 'GET' })
+      .then(function(data) {
+        console.log(data);
+        renderMenu(data);
+      });
+  }
+  loadMenu();
+
+  $(".#menuContainer").on('click', '.fa-plus', function() {
+    const foodid;
+    const orderid;
+    $.ajax(
+    {
+      url: "/menu/add",
+      method: 'POST',
+      data: {
+        foodid: foodid,
+        orderid: orderid
+      }
+    })
+  });
+
+
+
+})
