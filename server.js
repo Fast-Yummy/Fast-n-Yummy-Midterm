@@ -24,7 +24,6 @@ app.use(cookieSession({
 // Seperated Routes for each Resource
 const databaseHelper = require("./routes/dbHelper")(knex, Promise);
 const menuRoutes = require("./routes/menuRoutes")(databaseHelper);
-app.use("/menu", menuRoutes);
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -46,33 +45,35 @@ app.use(express.static("public"));
 
 // Mount all resource routes
 //app.use("/api/users", menuRoutes(knex));
-
+app.use("/menu", menuRoutes);
 // Home page
 app.get("/", (req, res) => {
  res.render("index");
 });
 //Project Home Page
 app.get("/home", (req, res) => {
- res.render("home");
+  const orderid = generateRandomString();
+  req.session.order_id = orderid;
+  let templateVars = {orderid: orderid};
+  res.render("home", templateVars);
 });
 
 //Menu Page
 app.get("/menu", (req, res) => {
-  const orderid = generateRandomString();
-  req.session.order_id = orderid;
-  console.log("this is the order ID: ",req.session.order_id);
-  let templateVars = {orderid: orderid};
+  let templateVars = {orderid: req.session.order_id};
   res.render("menu", templateVars);
 });
 
 //Confirmation Page
 app.get("/confirmation", (req, res) => {
- res.render("confirmation");
+  let templateVars = {orderid: req.session.order_id};
+ res.render("confirmation", templateVars);
 });
 
 //Status Page
 app.get("/status", (req, res) => {
- res.render("status");
+  let templateVars = {orderid: req.session.order_id};
+ res.render("status", templateVars);
 });
 
 function generateRandomString() {
@@ -92,8 +93,6 @@ function generateRandomString() {
   }
   return shortUrl;
 }
-
-
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);

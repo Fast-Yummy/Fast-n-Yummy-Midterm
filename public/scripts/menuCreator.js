@@ -41,13 +41,19 @@ function renderMenu(menudata) {
 
 
 $(document).ready(function() {
-  console.log('ready to load DOM');
+  const orderid = $("#sessionID").data("orderid") ;
+  $.ajax("/menu/createorderid", {
+    method: 'POST',
+    data: {orderid: orderid}
+  });
+
   const loadMenu = () => {
       $.ajax('/menu/load', { method: 'GET' })
       .then(function(data) {
         renderMenu(data);
       });
   }
+
 
   $("#menuContainer").on('click', '.fa-plus', function() {
 
@@ -64,14 +70,9 @@ $(document).ready(function() {
       }).then(function(response) {
         console.log(response);
       });
-
-
-
   });
 
-
   $("#menuContainer").on('click', '.fa-minus', function() {
-
     let foodid = $(this).parent().parent().attr("id");
     console.log(foodid);
     const orderid = $("#sessionID").data("orderid") ;
@@ -85,14 +86,62 @@ $(document).ready(function() {
       }).then(function(response) {
         console.log(response);
       });
-
-
-
   });
-
-
-
   loadMenu();
 
-});
+  $("#breakfast").click(function() {
+    $.ajax(
+    {
+      url: "/menu/category",
+      method: 'GET',
+      data: {
+        category: 'breakfast'
+      }
+    }).then(function(data) {
+      console.log(data);
+      $('#menuContainer').html("");
+      renderMenu(data);
+    })
+  });
+  $("#sides").click(function() {
+    $.ajax(
+    {
+      url: "/menu/category",
+      method: 'GET',
+      data: {
+        category: 'sides'
+      }
+    }).then(function(data) {
+      console.log(data);
+      $('#menuContainer').html("");
+      renderMenu(data);
+    })
+  });
+  $("#main").click(function() {
+    $.ajax(
+    {
+      url: "/menu/category",
+      method: 'GET',
+      data: {
+        category: 'main'
+      }
+    }).then(function(data) {
+      $('#menuContainer').html("");
+      renderMenu(data);
+    })
+  });
+  $("#dessert").click(function() {
+    $.ajax(
+    {
+      url: "/menu/category",
+      method: 'GET',
+      data: {
+        category: 'dessert'
+      }
+    }).then(function(data) {
+      $('#menuContainer').html("");
+      renderMenu(data);
+    })
+  });
+})
 
