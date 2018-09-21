@@ -1,0 +1,124 @@
+/* Styling for the main page area */
+
+$primary-color: #800000;
+$secondary-color: #999966;
+$border: 1px solid lightgrey;
+$border-hover: 1px solid grey;
+$rounded: 5px;
+$padded: 1em;
+
+
+.box {
+  background-color: white;
+  color: black;
+  margin-left: 2em;
+  margin-right: 2em;
+  margin-top: $padded;
+  margin-bottom: $padded;
+  padding-bottom: $padded;
+  border-radius: $rounded;
+  border: $border;
+}
+
+.sidebar-left {
+  height: 100%;
+  width: 160px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: $secondary-color;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+.sidebar-right {
+  height: 100%;
+  width: 160px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  background-color: $secondary-color;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+/* Styling for each displayed menu item */
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+@media screen and (max-width: 600px) {
+    .column {
+        width: 100%;
+    }
+}
+
+.menu-item-img {
+  margin: 5px;
+  width: 95%;
+  height: 95%;
+  border-radius: $rounded;
+}
+
+.description {
+  padding: $padded;
+  display: none;
+}
+
+.price {
+  float: right;
+  display: inline-block;
+  padding-top: $padded;
+  padding-right: $padded;
+}
+
+.item-name {
+  display: inline-block;
+  margin: $padded;
+  font-size: 1.5em;
+}
+
+.menu-item-header {
+  background-color: #999966;
+  height: 60px;
+}
+
+.menu-item-footer {
+  padding-left: $padded;
+  padding-top: $padded;
+  border-top: $border;
+}
+
+.add-sub {
+  padding-top: $padded;
+  display: span;
+}
+
+#menu:hover {
+  border: $border-hover;
+}
+
+#menu:hover .description {
+  display: block;
+}
+
+
+
+
+
+
+
+
+
+
+
+@media screen and (max-width: 600px) {
+    .column {
+        width: 100%;
+    }
+}
