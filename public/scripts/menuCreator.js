@@ -44,7 +44,6 @@ $(document).ready(function() {
   const loadMenu = () => {
       $.ajax('/menu/load', { method: 'GET' })
       .then(function(data) {
-        console.log(data);
         renderMenu(data);
       });
   }
@@ -64,20 +63,58 @@ $(document).ready(function() {
   //   })
   // });
 
-  // $("#menuContainer").on('click', '.fa-plus', function() {
-  //   const foodid;
-  //   const orderid;
-  //   $.ajax(
-  //   {
-  //     url: "/menu/add",
-  //     method: 'POST',
-  //     data: {
-  //       foodid: foodid,
-  //       orderid: orderid
-  //     }
-  //   })
-  // });
-
-
-
+  $("#breakfast").click(function() {
+    $.ajax(
+    {
+      url: "/menu/category",
+      method: 'GET',
+      data: {
+        category: 'breakfast'
+      }
+    }).then(function(data) {
+      console.log(data);
+      $('#menuContainer').html("");
+      renderMenu(data);
+    })
+  });
+  $("#sides").click(function() {
+    $.ajax(
+    {
+      url: "/menu/category",
+      method: 'GET',
+      data: {
+        category: 'sides'
+      }
+    }).then(function(data) {
+      console.log(data);
+      $('#menuContainer').html("");
+      renderMenu(data);
+    })
+  });
+  $("#main").click(function() {
+    $.ajax(
+    {
+      url: "/menu/category",
+      method: 'GET',
+      data: {
+        category: 'main'
+      }
+    }).then(function(data) {
+      $('#menuContainer').html("");
+      renderMenu(data);
+    })
+  });
+  $("#dessert").click(function() {
+    $.ajax(
+    {
+      url: "/menu/category",
+      method: 'GET',
+      data: {
+        category: 'dessert'
+      }
+    }).then(function(data) {
+      $('#menuContainer').html("");
+      renderMenu(data);
+    })
+  });
 })

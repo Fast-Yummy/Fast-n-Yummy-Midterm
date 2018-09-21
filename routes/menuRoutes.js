@@ -31,7 +31,8 @@ module.exports = (databaseHelper) => {
       }
     })
   });
-  menuRoutes.post("/category", (req, res) => {
+  menuRoutes.get("/category", (req, res) => {
+    console.log(req.body.category);
     const category = req.body.category;
     databaseHelper.getCategory(category, (error, result) => {
       if (error) throw error;
