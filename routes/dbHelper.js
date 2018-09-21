@@ -86,8 +86,27 @@ module.exports = function databaseHelper(knex, Promise) {
       .then(function(result) {
         cb(null,result);
       });
-    }
+    },
 
+    createOrderid: function(orderid, cb) {
+      knex("orders").insert({orderid: orderid}).returning('*')
+      .then(function(result) {
+        cb(null,result);
+      });
+    },
+
+    createOrder: function(orderid, phone, cb) {
+      knex("orders").where('orderid', '=', orderid)
+      .andWhere('orderid', '=', orderid)
+      .offset(1)
+      .del()
+      .then(function(result) {
+        knex("orders").insert({orderid: orderid, phone: phone}).returning('*')
+        .then(function(result) {
+          cb(null, result);
+        })
+      });
+    }
   };
 }
 
