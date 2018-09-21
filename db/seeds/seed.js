@@ -15,20 +15,26 @@ exports.seed = function(knex, Promise) {
         knex('fooditem').insert({
           name: 'food_testing1',
           price: 99.99,
+          category: 'breakfast',
           description: 'breakfast',
-          img: 'url1'
+          img: 'url1',
+          time: 1
       }),
         knex('fooditem').insert({
           name: 'food_testing2',
-          price: 99.99,
-          description: 'testing1',
-          img: 'url1'
+          price: 299.99,
+          category: 'lunch',
+          description: 'testin21',
+          img: 'url2',
+          time: 1
       }),
         knex('fooditem').insert({
           name: 'food_testing3',
-          price: 99.99,
-          description: 'testing1',
-          img: 'url1'
+          price: 399.99,
+          category: 'dinner',
+          description: 'testing3',
+          img: 'url3',
+          time: 1
       })
       ]);
     })

@@ -1,5 +1,4 @@
 exports.up = function(knex, Promise) {
-  //return knex.raw(``)
   return knex.schema.createTable('users', function (table) {
     table.increments();
     table.string('name');
