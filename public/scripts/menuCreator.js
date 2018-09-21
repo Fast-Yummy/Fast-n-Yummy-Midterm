@@ -4,8 +4,9 @@ function createMenuItem(data) {
   const price = ;
   const img = ;
   const description = ;
+  const category = ;
 
-  let $menu = $(`<section id="${id} menu">`).addClass("col-md-4");
+  let $menu = $(`<section id="${id} menu">`).addClass(`col-md-4 ${category}`);
 
   let $header = $("<header>").addClass("menu-item-header");
   let $section = $("<div>").addClass("menu-body");
