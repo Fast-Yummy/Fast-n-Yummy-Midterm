@@ -73,7 +73,8 @@ app.get("/confirmation", (req, res) => {
 //Status Page
 app.get("/status", (req, res) => {
   let templateVars = {orderid: req.session.order_id};
- res.render("status", templateVars);
+  req.session = null;
+  res.render("status", templateVars);
 });
 
 function generateRandomString() {
