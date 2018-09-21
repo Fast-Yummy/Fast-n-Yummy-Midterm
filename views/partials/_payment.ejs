@@ -52,7 +52,7 @@ THE SOFTWARE.
                                 name="cardNumber"
                                 placeholder="Valid Card Number"
                                 autocomplete="cc-number"
-                                required autofocus
+
                             />
                             <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
                         </div>
@@ -69,7 +69,7 @@ THE SOFTWARE.
                             name="cardExpiry"
                             placeholder="MM / YY"
                             autocomplete="cc-exp"
-                            required
+
                         />
                     </div>
                 </div>
@@ -82,7 +82,7 @@ THE SOFTWARE.
                             name="cardCVC"
                             placeholder="CVC"
                             autocomplete="cc-csc"
-                            required
+
                         />
                     </div>
                 </div>
@@ -91,7 +91,13 @@ THE SOFTWARE.
                 <div class="col-xs-12">
                     <div class="form-group">
                         <label for="couponCode">PHONE NUMBER</label>
-                        <input type="text" class="form-control" name="phoneNumber" />
+                        <input
+                            type="tel"
+                            class="form-control"
+                            name="phoneNumber"
+                            placeholder="Phone Number"
+                            required
+                        />
                     </div>
                 </div>
             </div>
