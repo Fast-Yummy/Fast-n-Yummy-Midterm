@@ -1,6 +1,6 @@
 "use strict";
 
-//const databaseHelper = require("./dbHelper.js")(knex, Promise);
+const databaseHelper = require("./dbHelper.js")(knex, Promise);
 const knex = require('knex')({
   client: 'pg',
   connection: {
@@ -34,7 +34,7 @@ module.exports = (knex) => {
       }
     })
   });
-  menuRoutes.post("/menu", (req, res) => {
+  menuRoutes.get("/menu", (req, res) => {
     databaseHelper.loadMenu(orderid, (error, result) => {
       if (error) throw error;
       else {
@@ -51,23 +51,7 @@ module.exports = (knex) => {
       }
     })
   });
-
-  return menuRoutes;
-
-
-
-   menuRoutes.get("/menu", (req, res) => {
-    const orderid = req.body.orderid;
-    const foodid = req.body.foodid;
-    databaseHelper.finalCart(orderid, (error, result) => {
-      if (error) throw error;
-      else {
-        res.json(result);
-      }
-    })
-  });
-
-menuRoutes.post("/status", (req, res) => {
+  menuRoutes.post("/status", (req, res) => {
     const orderid = req.body.orderid;
     databaseHelper.summary(orderid, (error, result) => {
       if (error) throw error;
@@ -86,6 +70,6 @@ menuRoutes.post("/status", (req, res) => {
       }
     })
   });
-
   return menuRoutes;
 }
+
