@@ -1,14 +1,3 @@
-const knex = require('knex')({
-  client: 'pg',
-  connection: {
-    host: "localhost",
-    user: 'labber',
-    password: 'labber',
-    database : 'midterm'
-  }
-});
-
-
 module.exports = function databaseHelper(knex, Promise) {
   return {
     //this is for just in case we use API
@@ -19,8 +8,6 @@ module.exports = function databaseHelper(knex, Promise) {
     //       console.log("successfully updated menu:",result);
     //     }).catch(function(err) {
     //       console.log("the order format is not corret, apply an array of obj of fooditem, or it may be cause by adding duplicated order(duplicate key value violates unique constraint)");
-    //     }).finally(function() {
-    //       knex.destroy();
     //     });
     // },
 
@@ -30,9 +17,6 @@ module.exports = function databaseHelper(knex, Promise) {
       knex("fooditem").select().then(function(result) {
         //result will be an array of object of fooditem, ignore anonymous
         cb(null, result);
-      })
-      .finally(function() {
-        knex.destroy();
       });
     },
 
@@ -41,8 +25,6 @@ module.exports = function databaseHelper(knex, Promise) {
       knex("fooditem").select().where('category', '=', category)
       .then(function(result) {
         cb(null, result);
-      }).finally(function() {
-        knex.destroy();
       });
     },
     //add orderid and phone number at the payment
@@ -55,9 +37,6 @@ module.exports = function databaseHelper(knex, Promise) {
         })
         .catch(function(err) {
           console.log("the order format is not corret, apply an obj of two item: id and phone, or it may be cause by adding duplicated order(duplicate key value violates unique constraint),or callback function");
-        })
-        .finally(function() {
-          knex.destroy();
         });
     },
 
@@ -75,9 +54,6 @@ module.exports = function databaseHelper(knex, Promise) {
         .then(function(result) {
           cb(null,result);
         })
-      })
-      .finally(function() {
-        knex.destroy();
       });
     },
 
@@ -97,9 +73,6 @@ module.exports = function databaseHelper(knex, Promise) {
         .then(function(result) {
           cb(null,result);
         })
-      })
-      .finally(function() {
-        knex.destroy();
       });
     },
 
@@ -112,13 +85,34 @@ module.exports = function databaseHelper(knex, Promise) {
       .groupBy('order_food_item.foodid', 'price', 'time')
       .then(function(result) {
         cb(null,result);
-      })
+      });
+    },
 
-      .finally(function() {
-        knex.destroy();
+    createOrderid: function(orderid, cb) {
+      knex("orders").where('orderid', '=', orderid)
+      .andWhere('orderid', '=', orderid)
+      .offset(1)
+      .del()
+      .then(function(result) {
+        knex("orders").insert({orderid: orderid}).returning('*')
+        .then(function(result) {
+          cb(null,result);
+        })
+      });
+    },
+
+    createOrder: function(orderid, phone, cb) {
+      knex("orders").where('orderid', '=', orderid)
+      .andWhere('orderid', '=', orderid)
+      .offset(1)
+      .del()
+      .then(function(result) {
+        knex("orders").insert({orderid: orderid, phone: phone}).returning('*')
+        .then(function(result) {
+          cb(null, result);
+        })
       });
     }
-
   };
 }
 
