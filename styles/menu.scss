@@ -9,15 +9,11 @@ $padded: 1em;
 
 
 .box {
-  background-color: white;
+  background-color: #f9f9f1;
   color: black;
-  margin-left: 2em;
-  margin-right: 2em;
-  margin-top: $padded;
   margin-bottom: $padded;
   padding-bottom: $padded;
   border-radius: $rounded;
-  border: $border;
 }
 
 .sidebar-left {
@@ -25,9 +21,9 @@ $padded: 1em;
   width: 160px;
   position: fixed;
   z-index: 1;
-  top: 0;
+  top: 100px;
   left: 0;
-  background-color: $secondary-color;
+  background-color: #f9f9f1;
   overflow-x: hidden;
   padding-top: 20px;
 }
@@ -37,9 +33,9 @@ $padded: 1em;
   width: 160px;
   position: fixed;
   z-index: 1;
-  top: 0;
+  top: 100px;
   right: 0;
-  background-color: $secondary-color;
+  background-color: #f9f9f1;
   overflow-x: hidden;
   padding-top: 20px;
 }
@@ -67,7 +63,6 @@ $padded: 1em;
 
 .description {
   padding: $padded;
-  display: none;
 }
 
 .price {
@@ -100,25 +95,6 @@ $padded: 1em;
 }
 
 #menu:hover {
-  border: $border-hover;
+
 }
 
-#menu:hover .description {
-  display: block;
-}
-
-
-
-
-
-
-
-
-
-
-
-@media screen and (max-width: 600px) {
-    .column {
-        width: 100%;
-    }
-}
