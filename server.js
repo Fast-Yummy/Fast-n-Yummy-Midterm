@@ -71,7 +71,7 @@ app.get("/menu", (req, res) => {
 //Confirmation Page
 app.get("/confirmation", (req, res) => {
   let templateVars = {orderid: req.session.order_id};
- res.render("confirmation", templateVars);
+  res.render("confirmation", templateVars);
 });
 
 //Status Page

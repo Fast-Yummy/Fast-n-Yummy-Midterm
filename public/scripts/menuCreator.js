@@ -30,7 +30,7 @@ function createMenuItem(data) {
   $menu.append($header, $section, $footer);
 
   return $menu;
-  }
+}
 
 function renderMenu(menudata) {
   for (let item of menudata) {
@@ -39,6 +39,32 @@ function renderMenu(menudata) {
   }
 }
 
+function createCartItem(data) {
+  const name = data.name;
+  const quantity = data.quantity;
+  const totalPrice = Math.round(quantity * data.price * 100) / 100;
+  const $item = `<p><a>${name}</a><span class="quantity">  ${quantity}</span><span class="price">${totalPrice}</span></p>`;
+  return $item;
+}
+
+function renderCart(data) {
+  $('.cartContainer').html("");
+  let totalItem = 0;
+  for (let item of data) {
+    totalItem += item.quantity;
+  }
+  const $cartTittle = `<h4>Cart <span class="price"><i class="fa fa-shopping-cart"></i> <b>${totalItem}</b></span></h4>`;
+  $('.cartContainer').append($cartTittle);
+  let totalPrice = 0;
+  for (let item of data) {
+    let $item = createCartItem(item);
+    $('.cartContainer').append($item);
+    totalPrice += item.price * item.quantity;
+  }
+  totalPrice = Math.round(totalPrice * 100) / 100;
+  const $total = `<p>Total</p> <div>$${totalPrice}</div>`;
+  $('.cartContainer').append($total);
+}
 
 $(document).ready(function() {
   const orderid = $("#sessionID").data("orderid") ;
@@ -53,7 +79,7 @@ $(document).ready(function() {
         renderMenu(data);
       });
   }
-
+  loadMenu();
 
   $("#menuContainer").on('click', '.fa-plus', function() {
 
@@ -68,7 +94,9 @@ $(document).ready(function() {
         orderid: orderid
       }
       }).then(function(response) {
+        $('#cartContainer').html("");
         console.log(response);
+        renderCart(response);
       });
   });
 
@@ -84,10 +112,11 @@ $(document).ready(function() {
         orderid: orderid
       }
       }).then(function(response) {
+
         console.log(response);
+        renderCart(response);
       });
   });
-  loadMenu();
 
   $("#breakfast").click(function() {
     $.ajax(
@@ -99,7 +128,7 @@ $(document).ready(function() {
       }
     }).then(function(data) {
       console.log(data);
-      $('#menuContainer').html("");
+
       renderMenu(data);
     })
   });
@@ -144,4 +173,3 @@ $(document).ready(function() {
     })
   });
 })
-
