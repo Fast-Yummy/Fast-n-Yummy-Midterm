@@ -86,7 +86,8 @@ app.get("/cart", (req, res) => {
 
 app.post("/order",(req,res) => {
 twilio.restaurant('12345', '+16477864414');
-res.redirect("/status")
+twilio.customer('12345', '20');
+res.redirect("/status");
 })
 
 function generateRandomString() {
