@@ -14,10 +14,18 @@ const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
 
+const cookieSession = require('cookie-session')
+app.use(cookieSession({
+  name: 'session',
+  keys: ['a',0,'g',46,543,52,85,'asdfg','gfsd','trfsdd'],
+  maxAge: 60 * 60 * 1000 // 1 hour
+}))
+
 // Seperated Routes for each Resource
 const databaseHelper = require("./routes/dbHelper")(knex, Promise);
 const menuRoutes = require("./routes/menuRoutes")(databaseHelper);
 app.use("/menu", menuRoutes);
+
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
 //         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
@@ -50,7 +58,11 @@ app.get("/home", (req, res) => {
 
 //Menu Page
 app.get("/menu", (req, res) => {
- res.render("menu");
+  const orderid = generateRandomString();
+  req.session.order_id = orderid;
+  console.log("this is the order ID: ",req.session.order_id);
+  let templateVars = {orderid: orderid};
+  res.render("menu", templateVars);
 });
 
 //Confirmation Page
@@ -62,6 +74,25 @@ app.get("/confirmation", (req, res) => {
 app.get("/status", (req, res) => {
  res.render("status");
 });
+
+function generateRandomString() {
+  function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+  }
+  let shortUrl = "";
+  for (let i = 0; i < 6; i++) {
+    let num = getRandomInt(9);
+    let randomNum = getRandomInt(25);
+    let letter = String.fromCharCode(randomNum + 65); //A:65
+    if (getRandomInt(2) === 0) {
+      shortUrl += num;
+    } else {
+      shortUrl += letter;
+    }
+  }
+  return shortUrl;
+}
+
 
 
 app.listen(PORT, () => {

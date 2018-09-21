@@ -41,7 +41,7 @@ function renderMenu(menudata) {
 
 
 $(document).ready(function() {
-  console.log('ready to loading DOM');
+  console.log('ready to load DOM');
   const loadMenu = () => {
       $.ajax('/menu/load', { method: 'GET' })
       .then(function(data) {
@@ -49,6 +49,7 @@ $(document).ready(function() {
       });
   }
 
+<<<<<<< HEAD
   $("#menuContainer").on('click', '.fa-plus', function() {
 
     let foodid = $(this).parent().parent().attr("id");
@@ -67,6 +68,7 @@ $(document).ready(function() {
 
 
   });
+
 
   $("#menuContainer").on('click', '.fa-minus', function() {
 
