@@ -72,3 +72,4 @@ module.exports = (knex) => {
   });
   return menuRoutes;
 }
+
