@@ -1,6 +1,6 @@
 "use strict";
 
-const databaseHelper = require("./dbHelper.js")(knex, Promise);
+//const databaseHelper = require("./dbHelper.js")(knex, Promise);
 const knex = require('knex')({
   client: 'pg',
   connection: {
