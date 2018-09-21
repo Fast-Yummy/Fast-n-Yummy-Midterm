@@ -14,6 +14,8 @@ const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
 
+const twilio = require('./server/twilio.js')
+
 // Seperated Routes for each Resource
 //const menuRoutes = require("./routes/menuRoutes");
 
@@ -62,6 +64,14 @@ app.get("/status", (req, res) => {
  res.render("status");
 });
 
+app.get("/cart", (req, res) => {
+ res.render("cart");
+});
+
+app.post("/order",(req,res) => {
+twilio.restaurant('12345', '+16477864414');
+res.redirect("/status")
+})
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
