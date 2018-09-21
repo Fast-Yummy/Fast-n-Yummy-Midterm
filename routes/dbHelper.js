@@ -89,9 +89,15 @@ module.exports = function databaseHelper(knex, Promise) {
     },
 
     createOrderid: function(orderid, cb) {
-      knex("orders").insert({orderid: orderid}).returning('*')
+      knex("orders").where('orderid', '=', orderid)
+      .andWhere('orderid', '=', orderid)
+      .offset(1)
+      .del()
       .then(function(result) {
-        cb(null,result);
+        knex("orders").insert({orderid: orderid}).returning('*')
+        .then(function(result) {
+          cb(null,result);
+        })
       });
     },
 
