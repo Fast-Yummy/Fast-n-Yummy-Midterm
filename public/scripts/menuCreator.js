@@ -40,7 +40,7 @@ function renderMenu(menudata) {
 
 
 $(document).ready(function() {
-  console.log('ready to loading DOM');
+  console.log('ready to load DOM');
   const loadMenu = () => {
       $.ajax('/menu/load', { method: 'GET' })
       .then(function(data) {
@@ -50,19 +50,33 @@ $(document).ready(function() {
   }
   loadMenu();
 
-  $(".#menuContainer").on('click', '.fa-plus', function() {
-    const foodid;
-    const orderid;
-    $.ajax(
-    {
-      url: "/menu/add",
-      method: 'POST',
-      data: {
-        foodid: foodid,
-        orderid: orderid
-      }
-    })
-  });
+  // $("#menuContainer").on('click', '.fa-plus', function() {
+  //   const foodid;
+  //   const orderid;
+  //   $.ajax(
+  //   {
+  //     url: "/menu/add",
+  //     method: 'POST',
+  //     data: {
+  //       foodid: foodid,
+  //       orderid: orderid
+  //     }
+  //   })
+  // });
+
+  // $("#menuContainer").on('click', '.fa-plus', function() {
+  //   const foodid;
+  //   const orderid;
+  //   $.ajax(
+  //   {
+  //     url: "/menu/add",
+  //     method: 'POST',
+  //     data: {
+  //       foodid: foodid,
+  //       orderid: orderid
+  //     }
+  //   })
+  // });
 
 
 
