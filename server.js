@@ -81,8 +81,6 @@ app.get("/confirmation", (req, res) => {
 app.get("/status", (req, res) => {
   const phoneNumber = req.query.phoneNumber;
   const totalTime = req.query.totalTime;
-  console.log(">>>>>>>>>>>>>>>>>>>>>>>>totalTime:",totalTime);
-  console.log(">>>>>>>>>>>>>>>>>>>>>>>>phone:",phoneNumber);
   let templateVars = {orderid: req.session.order_id,
     phoneNumber: phoneNumber,
     totalTime: totalTime
@@ -92,8 +90,8 @@ app.get("/status", (req, res) => {
 });
 
 app.post("/status", (req,res) => {
-  twilio.ready(`${req.session.order_id}`, `+1${req.body.phoneNumber}`)
-})
+  twilio.ready(`${req.body.orderid}`, `${req.body.phonenbr}`);
+});
 
 app.get("/cart", (req, res) => {
  res.render("cart");
@@ -102,10 +100,8 @@ app.get("/cart", (req, res) => {
 app.post("/order",(req,res) => {
   const totalTime = req.body.totalTime;
   const phoneNumber = req.body.phoneNumber;
-  let templateVars = {phoneNumber: req.body.phoneNumber};
   twilio.restaurant(`${req.session.order_id}`, '+16477864414');
-  twilio.customer(`${req.session.order_id}`, '20', `+1${req.body.phoneNumber}`);
-  //console.log(">>>>>>>>>>>>>>>>>>>>>>>>totalTime:",req.body.totalTime);
+  twilio.customer(`${req.session.order_id}`, totalTime, `${req.body.phoneNumber}`);
   res.redirect(url.format({
     pathname: "/status",
     query: {
@@ -114,6 +110,7 @@ app.post("/order",(req,res) => {
     }
   }));
 })
+
 
 function generateRandomString() {
   function getRandomInt(max) {
@@ -137,4 +134,3 @@ function generateRandomString() {
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
 });
-
