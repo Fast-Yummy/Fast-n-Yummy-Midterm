@@ -1,4 +1,5 @@
-module.exports = function databaseHelper(knex, Promise) {
+//module.exports =
+function databaseHelper(knex, Promise) {
   return {
     //this is for just in case we use API
     //for store owner to add food item to menu.
