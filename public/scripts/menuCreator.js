@@ -74,10 +74,10 @@ $(document).ready(function() {
   });
 
   const loadMenu = () => {
-      $.ajax('/menu/load', { method: 'GET' })
-      .then(function(data) {
-        renderMenu(data);
-      });
+    $.ajax('/menu/load', { method: 'GET' })
+    .then(function(data) {
+      renderMenu(data);
+    });
   }
   loadMenu();
 
