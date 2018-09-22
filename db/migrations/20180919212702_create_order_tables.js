@@ -18,17 +18,24 @@ exports.up = function(knex, Promise) {
       table.integer('foodid').references('foodid').inTable('fooditem');
       table.integer('quantity').unsigned();
     }),
-    knex.schema.createTable('order_food_item', function(table){
+    knex.schema.createTable('customer', function(table){
       table.increments('customerid').primary().unsigned();
       table.integer('phone').unsigned();
       table.string('password');
+      table.string('name');
+    }),
+    knex.schema.createTable('order_history', function(table){
+      table.integer('customerid').references('customerid').inTable('customer');
+      table.string('orderid').references('orderid').inTable('orders');
     })
   ]);
 };
 
 exports.down = function(knex, Promise) {
   return Promise.all([
+    //knex.schema.dropTable('orderHistory'),
     knex.schema.dropTable('order_food_item'),
+    //knex.schema.dropTable('customer'),
     knex.schema.dropTable('fooditem'),
     knex.schema.dropTable('orders')
   ])

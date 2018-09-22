@@ -27,7 +27,7 @@
         <h3>Order Number: <b><%=orderid%></b> </h3><br />
         <h2 id="order-text">Your food will be ready in: <p id="timer"></p> </h2>
       </div>
-    </main>
+      </main>
     <footer class="footer">
      <% include partials/_footer %>
     </footer>
@@ -82,6 +82,7 @@
             method: 'POST',
             data : {orderid :orderid, phonenbr: phonenbr}
             })
+
           .then(function(data){
             
           })

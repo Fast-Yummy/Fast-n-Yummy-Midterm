@@ -53,7 +53,6 @@ function renderCart(data) {
   for (let item of data) {
     totalItem = parseInt(totalItem) + parseInt(item.quantity);
     }
-  console.log(totalItem);
   const $cartTittle = `<h4>Cart <span class="price"><i class="fa fa-shopping-cart"></i> <b>${totalItem}</b></span></h4>`;
   $('.cartContainer').append($cartTittle);
   let totalPrice = 0;
