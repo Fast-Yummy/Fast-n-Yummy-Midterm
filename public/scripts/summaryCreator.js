@@ -17,7 +17,7 @@ function renderSummary(data) {
   $('.summaryContainer').append($tittle);
   let totalPrice = 0;
   for (let item of data) {
-    let $item = createCartItem(item);
+    let $item = createSummaryItem(item);
     $('.summaryContainer').append($item);
     totalPrice += item.price * item.quantity;
   }
