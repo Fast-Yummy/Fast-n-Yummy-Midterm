@@ -26,7 +26,7 @@ const smsRestaurant = (orderid, phone) => {
     from: "+16474904015", //twilio
     to: phone, //"+16477864414", //restaurant
     body: message
-  }, 
+  },
 //function(err, call) {
    // process.stdout.write(call.sid);
 //});
@@ -37,11 +37,11 @@ const smsRestaurant = (orderid, phone) => {
   });
 }
 
-const smsCustomer = (orderid, time) => {
+const smsCustomer = (orderid, time, phoneNumber) => {
   const message = `Hello, your order id: ${orderid} from Fast n Yummy should be ready in ${time} mins!.`
   client.messages.create({
     from: "+16474904015", //twilio
-    to: "+19058308227", //customer
+    to: `+${phoneNumber}`, //customer
     body: message
   }, (err, message) => {
     if (err) {
@@ -50,11 +50,11 @@ const smsCustomer = (orderid, time) => {
   });
 }
 
-const smsReady = (orderid) => {
+const smsReady = (orderid, phoneNumber) => {
   const message = `Hello your order id: ${orderid} from Fast n Yummy is now ready !.`
   client.messages.create({
     from: "+16474904015", //twilio
-    to: "+16477864403", //customer
+    to: `+${phoneNumber}`, //customer
     body: message
   }, (err, message) => {
     if (err) {

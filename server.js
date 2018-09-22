@@ -80,14 +80,20 @@ app.get("/status", (req, res) => {
  res.render("status", templateVars);
 });
 
+app.post("/status", (req,res) => {
+  twilio.ready(`${req.session.order_id}`, `+1${req.body.phoneNumber}`)
+})
+
 app.get("/cart", (req, res) => {
  res.render("cart");
 });
 
 app.post("/order",(req,res) => {
-twilio.restaurant('12345', '+16477864414');
-twilio.customer('12345', '20');
-res.redirect("/status");
+  let templateVars = {phoneNumber: req.body.phoneNumber};
+  twilio.restaurant(`${req.session.order_id}`, '+16477864414');
+  twilio.customer(`${req.session.order_id}`, '20', `+1${req.body.phoneNumber}`);
+  console.log(req.body.phoneNumber);
+  res.redirect("/status");
 })
 
 function generateRandomString() {
