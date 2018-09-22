@@ -25,14 +25,14 @@
     <main class="container">
       <section id="menu-list" class="sidebar-left box">
 
-        <div>
+        <h3><div>
           <ol>
             <li id="breakfast">Breakfast</li>
             <li id="main">Main Dishes</li>
             <li id="sides">Sides</li>
             <li id="dessert">Dessert</li>
           </ol>
-        </div>
+        </div></h3>
 
       </section>
 
@@ -55,15 +55,13 @@
       </section>
 
       <section id="menu-cart" class="sidebar-right box">
-        <div>
-          Cart lives here /n Cart lives here /n Cart lives here /n
-        </div>
-        <button class="confirm-button" type="button"></i>Confirm</button>
+        <div class="cartContainer"></div>
+        <form method="GET" action="/confirmation"><button class="confirm-button" type="submit" ></i>Confirm</button></form>
       </section>
 
     </main>
 
-    <footer class="footer">Copyright Fast'n'Yummy 2018
+    <footer class="footer">
     <% include partials/_footer %>
     </footer>
 

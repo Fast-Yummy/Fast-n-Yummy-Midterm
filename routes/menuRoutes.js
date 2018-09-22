@@ -41,22 +41,12 @@ module.exports = (databaseHelper) => {
       }
     })
   });
-  menuRoutes.post("/status", (req, res) => {
-    const orderid = req.body.orderid;
+  menuRoutes.get("/summary", (req, res) => {
+    const orderid = req.query.orderid;
     databaseHelper.summary(orderid, (error, result) => {
       if (error) throw error;
       else {
-        const summary = [];
-        for (let item in result) {
-          const itemDetail = {};
-          for (let key of item) {
-            itemDetail.foodid = item.foodid;
-            itemDetail.totalPrice = item.quantity * item.price;
-            itemDetail.totalTime = item.quantity * item.time;
-          }
-          summary.push(itemDetaild);
-        }
-       res.json(summary);
+       res.json(result);
       }
     })
   });

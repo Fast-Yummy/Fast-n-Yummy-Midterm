@@ -1,0 +1,18 @@
+/* Styling for footer */
+
+$primary-color: #800000;
+$secondary-color: #f9f9f1;
+
+.footer {
+  background-color: $secondary-color;
+  color: $primary-color;
+  padding-left: 2em;
+  padding-right: 2em;
+  position: relative;
+  z-index: 2;
+
+}
+
+.footer-container * {
+  margin: auto;
+}

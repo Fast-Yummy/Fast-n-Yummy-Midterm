@@ -14,12 +14,16 @@ const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
 
+
+const twilio = require('./server/twilio.js')
+
 const cookieSession = require('cookie-session')
 app.use(cookieSession({
   name: 'session',
   keys: ['a',0,'g',46,543,52,85,'asdfg','gfsd','trfsdd'],
   maxAge: 60 * 60 * 1000 // 1 hour
 }))
+
 
 // Seperated Routes for each Resource
 const databaseHelper = require("./routes/dbHelper")(knex, Promise);
@@ -67,7 +71,7 @@ app.get("/menu", (req, res) => {
 //Confirmation Page
 app.get("/confirmation", (req, res) => {
   let templateVars = {orderid: req.session.order_id};
- res.render("confirmation", templateVars);
+  res.render("confirmation", templateVars);
 });
 
 //Status Page
@@ -76,6 +80,22 @@ app.get("/status", (req, res) => {
   req.session = null;
   res.render("status", templateVars);
 });
+
+app.post("/status", (req,res) => {
+  twilio.ready(`${req.session.order_id}`, `+1${req.body.phoneNumber}`)
+})
+
+app.get("/cart", (req, res) => {
+ res.render("cart");
+});
+
+app.post("/order",(req,res) => {
+  let templateVars = {phoneNumber: req.body.phoneNumber};
+  twilio.restaurant(`${req.session.order_id}`, '+16477864414');
+  twilio.customer(`${req.session.order_id}`, '20', `+1${req.body.phoneNumber}`);
+  console.log(req.body.phoneNumber);
+  res.redirect("/status");
+})
 
 function generateRandomString() {
   function getRandomInt(max) {
@@ -94,6 +114,7 @@ function generateRandomString() {
   }
   return shortUrl;
 }
+
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
