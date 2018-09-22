@@ -1,4 +1,3 @@
-
 module.exports =
 
 // var knex = require('knex')({
@@ -12,16 +11,12 @@ module.exports =
 // });
 function databaseHelper(knex, Promise) {
   return {
-    //this is for just in case we use API
-    //for store owner to add food item to menu.
-    // addItemToMenu: function(itemData) {
-    //     knex("fooditem").insert(itemData).returning('*')
-    //     .then(function(result) {
-    //       console.log("successfully updated menu:",result);
-    //     }).catch(function(err) {
-    //       console.log("the order format is not corret, apply an array of obj of fooditem, or it may be cause by adding duplicated order(duplicate key value violates unique constraint)");
-    //     });
-    // },
+
+    addItemToMenu: function(itemData) {
+        knex("order_history").insert(itemData).returning('*')
+        .then(function(result) {
+          console.log("successfully updated menu:",result);
+        });    },
 
     //loadMenu return the menu for rendering
     loadMenu: function(cb)
@@ -121,11 +116,20 @@ function databaseHelper(knex, Promise) {
           cb(null, result);
         })
       });
+    },
+
+    logStatus: function(orderid, cb) {
+      knex.select('name').from("order_history")
+      .innerJoin('customer', 'customer.customerid', 'order_history.customerid')
+      .where('orderid', '=', orderid)
+      .then(function(result) {
+        cb(null, result);
+      });
     }
   };
 }
 
-//databaseHelper(knex, Promise).summary('dda1345', console.log);
+//databaseHelper(knex, Promise).logStatus('testorder02', console.log);
 
 /////////////////testing/////////////ignore///////////////////////////
 
@@ -134,9 +138,9 @@ function databaseHelper(knex, Promise) {
 //databaseHelper(knex, Promise).removeCart('K02714',2,console.log);
 
 
-// const orderData = {orderid: "dda1345",
-//                    phone: 123456111};
-// databaseHelper(knex, Promise).addOrder(orderData,console.log);
+ // const orderData = {customerid: 1,
+ //                    orderid: 'testorder01'};
+ //  databaseHelper(knex, Promise).addItemToMenu(orderData);
 
 // const itemList = [{orderid: "abc123", foodid: 2}];
 
