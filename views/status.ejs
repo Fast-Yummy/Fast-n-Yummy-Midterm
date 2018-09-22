@@ -66,27 +66,22 @@
 
         const orderid = $("#sessionID").data("orderid");
 
-          $.ajax("/status", {
-            method: 'POST',
-            data: {orderid: orderid
-              phoneNumber: phoneNumber})
+          $.ajax("/status",
+            { method: 'POST',
+            data: {
+              orderid: orderid,
+              phoneNumber: phoneNumber
             }
+          })
           .then(function(data){
             document.getElementById("timer").innerHTML = "ORDER READY!";
-          })
-          };
+          });
+         }
 
 
     }, 1000);
     </script>
   </body>
 </html>
-
-<!-- const loadMenu = () => {
-      $.ajax('/menu/load', { method: 'GET' })
-      .then(function(data) {
-        renderMenu(data);
-      });
-  } -->
 
 
