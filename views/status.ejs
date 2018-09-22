@@ -60,7 +60,7 @@
       document.getElementById("timer").innerHTML = days + "d " + hours + "h "
       + minutes + "m " + seconds + "s ";
 
-      // If the count down is finished, write some text
+      // If the count down is finished, send the ready message and write some text
       if (distance < 0) {
         clearInterval(x);
 
