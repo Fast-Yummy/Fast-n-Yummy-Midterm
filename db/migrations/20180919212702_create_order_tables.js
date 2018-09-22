@@ -16,6 +16,7 @@ exports.up = function(knex, Promise) {
     knex.schema.createTable('order_food_item', function(table){
       table.string('orderid').references('orderid').inTable('orders');
       table.integer('foodid').references('foodid').inTable('fooditem');
+      table.integer('quantity').unsigned();
     })
   ]);
 };

@@ -74,10 +74,10 @@ $(document).ready(function() {
   });
 
   const loadMenu = () => {
-      $.ajax('/menu/load', { method: 'GET' })
-      .then(function(data) {
-        renderMenu(data);
-      });
+    $.ajax('/menu/load', { method: 'GET' })
+    .then(function(data) {
+      renderMenu(data);
+    });
   }
   loadMenu();
 
@@ -105,7 +105,7 @@ $(document).ready(function() {
     console.log(foodid);
     const orderid = $("#sessionID").data("orderid") ;
     console.log(orderid);
-    $.ajax("/menu/add",
+    $.ajax("/menu/remove",
       { method: 'POST',
       data: {
         foodid: foodid,

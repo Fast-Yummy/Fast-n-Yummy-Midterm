@@ -130,7 +130,6 @@ function databaseHelper(knex, Promise) {
 
 //databaseHelper(knex, Promise).addCart('K02714',4,console.log);
 //databaseHelper(knex, Promise).removeCart('K02714',2,console.log);
-//databaseHelper(knex, Promise).finalCart('dda1345', console.log)
 
 
 // const orderData = {orderid: "dda1345",
