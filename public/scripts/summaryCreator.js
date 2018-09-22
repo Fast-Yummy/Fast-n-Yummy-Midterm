@@ -7,24 +7,23 @@ function createSummaryItem(data) {
   return $item;
 }
 function renderSummary(data) {
-  let totalItem = 0;
-  let totalTime = 0;
-  for (let item of data) {
-    totalItem += item.quantity;
-    totalTime += item.quantity * item.time;
-  }
-  const $cartTittle = `<h4>Cart <span class="price"><i class="fa fa-shopping-cart"></i> <b>${totalItem}</b></span></h4>`;
-  $('.summaryContainer').append($cartTittle);
   let totalPrice = 0;
+  let totalItem = 0;
   for (let item of data) {
     let $item = createSummaryItem(item);
     $('.summaryContainer').append($item);
     totalPrice += item.price * item.quantity;
+    totalItem += item.quantity;
   }
+  const $cartTittle = `<h4>Cart <span class="price"><i class="fa fa-shopping-cart"></i> <b>${totalItem}</b></span></h4>`;
+  $('.summaryContainer').append($cartTittle);
   const $total = `<p>Total</p> <div>$${totalPrice}</div>`;
   $('.summaryContainer').append($total);
-}
 
+
+
+  //$('.summaryContainer').data("totalTime", totalTime);
+}
 
 $(document).ready(function() {
   const orderid = $("#sessionID").data("orderid") ;
@@ -36,6 +35,13 @@ $(document).ready(function() {
       }})
     .then(function(data) {
       renderSummary(data);
+
+      let totalTime = 0;
+      for (let item of data) {
+        totalTime += item.quantity * item.time;
+      }
+      const $hidden = `<input type="hidden" name="totalTime" value="${totalTime}">`;
+      $('#submitform').append($hidden);
     });
   }
   loadSummary();
