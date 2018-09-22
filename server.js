@@ -29,6 +29,7 @@ app.use(cookieSession({
 // Seperated Routes for each Resource
 const databaseHelper = require("./routes/dbHelper")(knex, Promise);
 const menuRoutes = require("./routes/menuRoutes")(databaseHelper);
+const logRoutes = require("./routes/logRoutes")(databaseHelper);
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -51,6 +52,7 @@ app.use(express.static("public"));
 // Mount all resource routes
 //app.use("/api/users", menuRoutes(knex));
 app.use("/menu", menuRoutes);
+app.use("/log", logRoutes);
 // Home page
 app.get("/", (req, res) => {
  res.render("index");
@@ -111,7 +113,6 @@ app.post("/order",(req,res) => {
       totalTime: totalTime
     }
   }));
-  //res.redirect("/status/?valid=" + phoneNumber);
 })
 
 function generateRandomString() {
