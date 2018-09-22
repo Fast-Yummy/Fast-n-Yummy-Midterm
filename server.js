@@ -14,6 +14,7 @@ const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
 
+const url = require('url');
 
 const twilio = require('./server/twilio.js')
 
@@ -76,8 +77,16 @@ app.get("/confirmation", (req, res) => {
 
 //Status Page
 app.get("/status", (req, res) => {
-  let templateVars = {orderid: req.session.order_id};
- res.render("status", templateVars);
+  const phoneNumber = req.query.phoneNumber;
+  const totalTime = req.query.totalTime;
+  console.log(">>>>>>>>>>>>>>>>>>>>>>>>totalTime:",totalTime);
+  console.log(">>>>>>>>>>>>>>>>>>>>>>>>phone:",phoneNumber);
+  let templateVars = {orderid: req.session.order_id,
+    phoneNumber: phoneNumber,
+    totalTime: totalTime
+  };
+  req.session = null;
+  res.render("status", templateVars);
 });
 
 app.post("/status", (req,res) => {
@@ -89,11 +98,20 @@ app.get("/cart", (req, res) => {
 });
 
 app.post("/order",(req,res) => {
+  const totalTime = req.body.totalTime;
+  const phoneNumber = req.body.phoneNumber;
   let templateVars = {phoneNumber: req.body.phoneNumber};
   twilio.restaurant(`${req.session.order_id}`, '+16477864414');
   twilio.customer(`${req.session.order_id}`, '20', `+1${req.body.phoneNumber}`);
-  console.log(req.body.phoneNumber);
-  res.redirect("/status");
+  //console.log(">>>>>>>>>>>>>>>>>>>>>>>>totalTime:",req.body.totalTime);
+  res.redirect(url.format({
+    pathname: "/status",
+    query: {
+      phoneNumber: phoneNumber,
+      totalTime: totalTime
+    }
+  }));
+  //res.redirect("/status/?valid=" + phoneNumber);
 })
 
 function generateRandomString() {

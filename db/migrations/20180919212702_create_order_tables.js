@@ -17,6 +17,11 @@ exports.up = function(knex, Promise) {
       table.string('orderid').references('orderid').inTable('orders');
       table.integer('foodid').references('foodid').inTable('fooditem');
       table.integer('quantity').unsigned();
+    }),
+    knex.schema.createTable('order_food_item', function(table){
+      table.increments('customerid').primary().unsigned();
+      table.integer('phone').unsigned();
+      table.string('password');
     })
   ]);
 };
