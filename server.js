@@ -81,20 +81,20 @@ app.get("/status", (req, res) => {
 });
 
 app.post("/status", (req,res) => {
-  twilio.ready(`${req.session.order_id}`, `+1${req.body.phoneNumber}`)
-})
+  twilio.ready(`${req.session.order_id}`, "+16477864403")//req.body.phoneNumber)
+});
 
 app.get("/cart", (req, res) => {
  res.render("cart");
 });
 
 app.post("/order",(req,res) => {
-  let templateVars = {phoneNumber: req.body.phoneNumber};
+  const phonenbr = req.body.phoneNumber;
+  req.session.phone_nbr = `${phonenbr}`;
   twilio.restaurant(`${req.session.order_id}`, '+16477864414');
-  twilio.customer(`${req.session.order_id}`, '20', `+1${req.body.phoneNumber}`);
-  console.log(req.body.phoneNumber);
+  twilio.customer(`${req.session.order_id}`, '20', req.body.phoneNumber);
   res.redirect("/status");
-})
+});
 
 function generateRandomString() {
   function getRandomInt(max) {
@@ -118,4 +118,3 @@ function generateRandomString() {
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
 });
-
