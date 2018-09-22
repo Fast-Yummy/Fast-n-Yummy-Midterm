@@ -1,5 +1,5 @@
 
-//module.exports =
+module.exports =
 
 // var knex = require('knex')({
 //   client: 'pg',
