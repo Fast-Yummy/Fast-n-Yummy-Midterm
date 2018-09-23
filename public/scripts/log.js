@@ -93,9 +93,8 @@ $(document).ready(function() {
       }
     }).then(function() {
       $('#registerContainer').hide();
-      $('.welcome').html('');
       const $welcome = `<p>Welcome ${name}!</p>`;
-      $('.welcome').append($welcome);
+      $('.welcome').html('').append($welcome);
 
     });
   })

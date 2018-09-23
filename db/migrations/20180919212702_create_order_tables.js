@@ -11,7 +11,7 @@ exports.up = function(knex, Promise) {
     }),
     knex.schema.createTable('orders', function(table){
       table.string('id').primary(); //browser cookie session ID is used for orderID
-      table.integer('phone');
+      table.string('phone');
     }),
     knex.schema.createTable('order_fooditem', function(table){
       table.string('orderid').references('id').inTable('orders');
@@ -20,7 +20,7 @@ exports.up = function(knex, Promise) {
     }),
     knex.schema.createTable('customers', function(table){
       table.increments('id').primary().unsigned();
-      table.integer('phone').unsigned();
+      table.string('phone');
       table.string('password');
       table.string('name');
     }),
