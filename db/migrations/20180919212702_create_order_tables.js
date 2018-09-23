@@ -27,6 +27,7 @@ exports.up = function(knex, Promise) {
     knex.schema.createTable('order_history', function(table){
       table.integer('customerid').references('id').inTable('customers');
       table.string('orderid').references('id').inTable('orders');
+      table.string('userid');
     })
   ]);
 };

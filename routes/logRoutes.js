@@ -55,6 +55,17 @@ module.exports = (databaseHelper) => {
       }
     })
   });
+  logRoutes.post("/register", (req, res) => {
+    const phone = req.body.phone;
+    const password = req.body.password;
+    const name = req.body.name;
+    databaseHelper.register(phone, password, name, (error, result) => {
+      if (error) throw error;
+      else {
+        res.json(result);
+      }
+    })
+  });
 
 
 

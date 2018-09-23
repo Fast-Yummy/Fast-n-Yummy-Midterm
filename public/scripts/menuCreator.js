@@ -33,6 +33,7 @@ function createMenuItem(data) {
 }
 
 function renderMenu(menudata) {
+  $('#menuContainer').html('');
   for (let item of menudata) {
     let $item = createMenuItem(item);
     $('#menuContainer').append($item);
@@ -123,6 +124,7 @@ $(document).ready(function() {
       }
     }).then(function(data) {
       renderMenu(data);
+      $('html').animate({scrollTop : 0},800);
     })
   });
   $("#sides").click(function() {
@@ -136,6 +138,7 @@ $(document).ready(function() {
     }).then(function(data) {
       $('#menuContainer').html("");
       renderMenu(data);
+      $('html').animate({scrollTop : 0},800);
     })
   });
   $("#main").click(function() {
@@ -149,6 +152,7 @@ $(document).ready(function() {
     }).then(function(data) {
       $('#menuContainer').html("");
       renderMenu(data);
+      $('html').animate({scrollTop : 0},800);
     })
   });
   $("#dessert").click(function() {
@@ -162,6 +166,7 @@ $(document).ready(function() {
     }).then(function(data) {
       $('#menuContainer').html("");
       renderMenu(data);
+      $('html').animate({scrollTop : 0},800);
     })
   });
 })

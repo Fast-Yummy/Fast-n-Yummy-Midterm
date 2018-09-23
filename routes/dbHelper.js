@@ -167,9 +167,13 @@ module.exports = function databaseHelper(knex, Promise) {
         if (result.length === 0) {
           cb(null, result);
         } else {
-          knex('order_history').insert({customerid: result[0].id, orderid: orderid, userid: userid})
+          const id = result[0].id;
+          knex('order_history').insert({customerid: id, orderid: orderid, userid: userid})
           .then(function(result) {
-            cb(null,result);
+            knex('customers').select('name').where('id', '=', id)
+            .then(function(result) {
+              cb(null, result);
+            })
           });
         }
       })
@@ -179,6 +183,12 @@ module.exports = function databaseHelper(knex, Promise) {
       .then(function(result) {
         cb(null,result);
       });
+    },
+    register: function(phone, password, name, cb) {
+      knex('customers').insert({phone: phone, password: password, name: name})
+      .then(function() {
+        cb(null, []);
+      })
     }
 
   };

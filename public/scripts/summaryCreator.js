@@ -35,9 +35,7 @@ $(document).ready(function() {
         orderid: orderid
       }})
     .then(function(data) {
-      console.log(data);
       renderSummary(data);
-
       let totalTime = 0;
       for (let item of data) {
         totalTime += item.quantity * item.time;
@@ -47,5 +45,21 @@ $(document).ready(function() {
     });
   }
   loadSummary();
+  // $('#submit-order').on('submit', function(event) {
+  //   console.log("confirm button clicked");
+  //   //event.preventDefault();
+  //   const phone = $(this).serialize();
+  //   console.log(">>>>>>>>>>>>>>phone:", phone, , "this>>>>>>", $(this));
+  //   $.ajax('menu/createorder', {
+  //     method: 'POST',
+  //     data: {
+  //       id: orderid,
+  //       phone: phone
+  //     }
+  //   })
+  // })
+
+
+
 })
 
