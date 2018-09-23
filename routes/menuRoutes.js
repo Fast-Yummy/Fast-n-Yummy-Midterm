@@ -37,7 +37,7 @@ module.exports = (databaseHelper) => {
     databaseHelper.getCategory(category, (error, result) => {
       if (error) throw error;
       else {
-        res.json(result);
+        res.status(200).json(result);
       }
     })
   });
@@ -55,7 +55,7 @@ module.exports = (databaseHelper) => {
     databaseHelper.createOrderid(orderid, (error, result) => {
       if (error) throw error;
       else {
-        res.send("success");
+        res.status(200);
       }
     })
   });
@@ -65,7 +65,7 @@ module.exports = (databaseHelper) => {
     databaseHelper.createOrderid(orderid, (error, result) => {
       if (error) throw error;
       else {
-        res.send("success");
+        res.status(200);
       }
     })
   });

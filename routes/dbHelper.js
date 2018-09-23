@@ -117,19 +117,23 @@ module.exports = function databaseHelper(knex, Promise) {
     },
 
     createOrderid: function(orderid, cb) {
-      knex("orders").where('id', '=', orderid).del()
+      knex("orders").select().where('id', '=', orderid)
       .then(function(result) {
-        knex("orders").insert({id: orderid}).returning('*')
-        .then(function(result) {
+        if (result.length === 0) {
+          knex("orders").insert({id: orderid}).returning('*')
+          .then(function(result) {
+            cb(null,result);
+          })
+        } else {
           cb(null,result);
-        })
+        }
       });
     },
 
     createOrder: function(orderid, phone, cb) {
-      knex("orders").where('orderid', '=', orderid).del()
+      knex("orders").select().where('id', '=', orderid)
       .then(function(result) {
-        knex("orders").insert({id: orderid, phone: phone}).returning('*')
+        knex("orders").update({phone: phone}).returning('*')
         .then(function(result) {
           cb(null, result);
         })
