@@ -38,10 +38,10 @@ const smsRestaurant = (orderid, phone) => {
 }
 
 const smsCustomer = (orderid, time, phoneNumber) => {
-  const message = `Hello, your order id ${orderid} from Fast n Yummy should be ready in ${time} min(s)!.`
+  const message = `Hello, your order id ${orderid} from Fast n Yummy should be ready in ${time} min(s)!`
   client.messages.create({
     from: "+16474904015", //twilio
-    to: `+${phoneNumber}`, //customer
+    to: `+1${phoneNumber}`, //customer
     body: message
   }, (err, message) => {
     if (err) {
@@ -51,10 +51,10 @@ const smsCustomer = (orderid, time, phoneNumber) => {
 }
 
 const smsReady = (orderid, phoneNumber) => {
-  const message = `Hello your order id ${orderid} from Fast n Yummy is now ready !.`
+  const message = `Hello your order id ${orderid} from Fast n Yummy is now ready !`
   client.messages.create({
     from: "+16474904015", //twilio
-    to: phoneNumber, //customer
+    to: `+1${phoneNumber}`, //customer
     body: message
   }, (err, message) => {
     if (err) {

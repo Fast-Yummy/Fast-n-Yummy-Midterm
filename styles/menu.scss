@@ -18,7 +18,7 @@ $padded: 1em;
 
 .sidebar-left {
   height: 100%;
-  width: 160px;
+  width: 150px;
   position: fixed;
   z-index: 1;
   top: 100px;
@@ -30,7 +30,7 @@ $padded: 1em;
 
 .sidebar-right {
   height: 100%;
-  width: 160px;
+  width: 150px;
   position: fixed;
   z-index: 1;
   top: 100px;
@@ -54,10 +54,18 @@ $padded: 1em;
     }
 }
 
+.image-box {
+  display: flex;
+  align-items: center;
+  height: 200px;
+
+}
+
 .menu-item-img {
   margin: 5px;
   width: 95%;
   height: 95%;
+  object-fit: cover;
   border-radius: $rounded;
 }
 

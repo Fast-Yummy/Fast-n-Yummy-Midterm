@@ -16,6 +16,7 @@ function createMenuItem(data) {
   let $name = $("<span>").addClass("item-name").append(name);
 
   let $image = $(`<img src = ${img}>`).addClass("menu-item-img");
+  let $imageBox = $("<div>").addClass("image-box").append($image);
 
   let $description = $("<p>").text(description).addClass("description");
 
@@ -24,7 +25,7 @@ function createMenuItem(data) {
   let $price = $("<p>").addClass("price").append(price);
 
   $header.append($name);
-  $section.append($image, $description);
+  $section.append($imageBox, $description);
   $footer.append($plus, $minus, $price);
 
   $menu.append($header, $section, $footer);

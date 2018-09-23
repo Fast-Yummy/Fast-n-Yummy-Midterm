@@ -14,7 +14,7 @@ exports.seed = function(knex, Promise) {
       price: 9.99,
       category: 'breakfast',
       description: 'A tasty BLT with bonus fried egg.',
-      img: '/images/Breakfast/sandwich.png',
+      img: '/images/Breakfast/sandwich.jpg',
       time: 10
     },
     {
@@ -150,7 +150,7 @@ exports.seed = function(knex, Promise) {
       price: 8.99,
       category: 'dessert',
       description: 'White chocolate, caramel, walnut pieces, and fudge.',
-      img: '/images/Dessert/rocky-road.jpeg',
+      img: '/images/Dessert/rocky-road.jpg',
       time: 5
     },
     {
@@ -158,7 +158,7 @@ exports.seed = function(knex, Promise) {
       price: 9.99,
       category: 'dessert',
       description: 'All the chocolate you could want, in convenient layers.',
-      img: '/images/Dessert/layered-chocolate-mousse.jpeg',
+      img: '/images/Dessert/layered-chocolate-mousse.jpg',
       time: 5
     },
     {
