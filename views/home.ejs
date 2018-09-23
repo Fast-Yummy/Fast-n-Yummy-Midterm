@@ -15,11 +15,26 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <script type="text/javascript" src="/scripts/log.js"></script>
   </head>
   <body>
     <% include partials/_header %>
     <img src="/images/tomato-background.jpg" class="background-img">
     <a href="/menu"><button class="order-button" type="button">Order</button></a>
+    <div id=registerContainer>
+      <button id="register-button" type="button">Register</button>
+      <form id="registerForm">
+        <label for="name">Enter name</label>
+        <input name="name" placeholder=name">
+        <label for="phone">Enter phone number</label>
+        <input class="phone" name="phone" placeholder="phone number">
+        <label for="password">Enter password</label>
+        <input class="password" type="password" name="password" placeholder="password">
+        <input type="submit" method="POST" value="Submit">
+      </form>
+    </div>
+    <div class='welcome'></div>
+
     <footer class="footer">
  <% include partials/_footer %>
     </footer>

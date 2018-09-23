@@ -1,9 +1,9 @@
 function createSummaryItem(data) {
   const name = data.name;
   const quantity = data.quantity;
-  const totalPrice = Math.round(quantity * data.price * 100) / 100;
+  const price = Math.round(data.price * 100) / 100;
   const totalTime = quantity * data.time;
-  const $item = `<p><a>${name}</a><span class="quantity">  ${quantity}</span><span class="price">${totalPrice}</span></p>`;
+  const $item = `<p><a>${name}</a><span class="quantity">  ${quantity}</span><span class="price">${price}</span></p>`;
   return $item;
 }
 
@@ -35,9 +35,7 @@ $(document).ready(function() {
         orderid: orderid
       }})
     .then(function(data) {
-      console.log(data);
       renderSummary(data);
-
       let totalTime = 0;
       for (let item of data) {
         totalTime += item.quantity * item.time;
@@ -47,5 +45,21 @@ $(document).ready(function() {
     });
   }
   loadSummary();
+  // $('#submit-order').on('submit', function(event) {
+  //   console.log("confirm button clicked");
+  //   //event.preventDefault();
+  //   const phone = $(this).serialize();
+  //   console.log(">>>>>>>>>>>>>>phone:", phone, , "this>>>>>>", $(this));
+  //   $.ajax('menu/createorder', {
+  //     method: 'POST',
+  //     data: {
+  //       id: orderid,
+  //       phone: phone
+  //     }
+  //   })
+  // })
+
+
+
 })
 

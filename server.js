@@ -50,9 +50,8 @@ app.use("/styles", sass({
 app.use(express.static("public"));
 
 // Mount all resource routes
-//app.use("/api/users", menuRoutes(knex));
-app.use("/menu", menuRoutes);
 app.use("/log", logRoutes);
+app.use("/menu", menuRoutes);
 // Home page
 app.get("/", (req, res) => {
  res.render("index");
@@ -61,6 +60,7 @@ app.get("/", (req, res) => {
 app.get("/home", (req, res) => {
   const orderid = generateRandomString();
   req.session.order_id = orderid;
+  console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>order id:", req.session.order_id);
   let templateVars = {orderid: orderid};
   res.render("home", templateVars);
 });

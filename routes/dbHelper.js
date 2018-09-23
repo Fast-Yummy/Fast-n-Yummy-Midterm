@@ -1,32 +1,15 @@
-module.exports =
 
-// var knex = require('knex')({
-//   client: 'pg',
-//   connection: {
-//     host : 'localhost',
-//     user : 'labber',
-//     password : 'labber',
-//     database : 'midterm'
-//   }
-// });
-function databaseHelper(knex, Promise) {
+
+
+module.exports = function databaseHelper(knex, Promise) {
   return {
-
-    addItemToMenu: function(itemData) {
-        knex("order_history").insert(itemData).returning('*')
-        .then(function(result) {
-          console.log("successfully updated menu:",result);
-        });    },
-
-    //loadMenu return the menu for rendering
     loadMenu: function(cb)
      {
       knex("fooditem").select().then(function(result) {
-        //result will be an array of object of fooditem, ignore anonymous
+        //result will be an array of object of fooditem
         cb(null, result);
       });
     },
-
     //return an array of obj of all the item of that category
     getCategory: function(category, cb) {
       knex("fooditem").select().where('category', '=', category)
@@ -34,113 +17,179 @@ function databaseHelper(knex, Promise) {
         cb(null, result);
       });
     },
-    //add orderid and phone number at the payment
-    addOrder: function(orderData, cb) {
-      //orderData is an obj of two item: id(session) and phone
-      knex("orders").insert(orderData).returning('*')
-        .then(function(result) {
-          console.log("successfully insert order:",result);
-          cb(null, result);
-        })
-        .catch(function(err) {
-          console.log("the order format is not corret, apply an obj of two item: id and phone, or it may be cause by adding duplicated order(duplicate key value violates unique constraint),or callback function");
-        });
-    },
-
     //add item to cart and return the updated cart
     addCart: function(orderid, foodid, cb) {
-      const qraw ='name, COUNT(fooditem.foodid) AS quantity, fooditem.price';
-      knex("order_food_item")
-      .insert({orderid: orderid, foodid: foodid})
+      knex.select('quantity').from('order_fooditem')
+      .where('orderid', '=', orderid)
+      .andWhere('foodid', '=', foodid)
       .then(function(result) {
-        knex.select(knex.raw(qraw))
-        .from('order_food_item').innerJoin('fooditem', 'fooditem.foodid', 'order_food_item.foodid')
-        .where('orderid', '=', orderid)
-        .groupBy('fooditem.name', 'fooditem.price')
-        .then(function(result) {
-          cb(null,result);
-        })
+        if (result.length === 0) {
+          knex("order_fooditem").insert({orderid: orderid, foodid: foodid, quantity: 1})
+          .then(function(result) {
+            const qraw = 'name, quantity, quantity * price as price';
+            knex.select(knex.raw(qraw))
+            .from('order_fooditem').innerJoin('fooditem', 'fooditem.id', 'order_fooditem.foodid')
+            .where('orderid', '=', orderid)
+            .groupBy('name', 'quantity', 'price','foodid')
+            .orderBy('foodid')
+            .then(function(result) {
+              cb(null,result);
+            })
       });
+        } else {
+          knex('order_fooditem')
+          .where('orderid', '=', orderid)
+          .andWhere('foodid', '=', foodid)
+          .increment('quantity',1)
+          .then(function(result) {
+            const qraw = 'name, quantity, quantity * price as price';
+            knex.select(knex.raw(qraw))
+            .from('order_fooditem').innerJoin('fooditem', 'fooditem.id', 'order_fooditem.foodid')
+            .where('orderid', '=', orderid)
+            .groupBy('name', 'quantity', 'price','foodid')
+            .orderBy('foodid')
+            .then(function(result) {
+              cb(null,result);
+            })
+          });
+        }
+      })
     },
 
     //removeCart remove item to cart and return the updated cart
     removeCart: function(orderid, foodid, cb) {
-      const qraw ='name, COUNT(fooditem.foodid) AS quantity, fooditem.price';
-      knex("order_food_item")
+      knex.select('quantity').from('order_fooditem')
       .where('orderid', '=', orderid)
       .andWhere('foodid', '=', foodid)
-      .offset(1)
-      .limit(1)
-      .del()
       .then(function(result) {
-        knex.select(knex.raw(qraw))
-        .from('order_food_item').innerJoin('fooditem', 'fooditem.foodid', 'order_food_item.foodid')
-        .where('orderid', '=', orderid)
-        .groupBy('fooditem.name', 'fooditem.price')
-        .then(function(result) {
-          cb(null,result);
-        })
-      });
+        if (result.length === 0) {
+          const qraw = 'name, quantity, quantity * price as price';
+          knex.select(knex.raw(qraw))
+          .from('order_fooditem').innerJoin('fooditem', 'fooditem.id', 'order_fooditem.foodid')
+          .where('orderid', '=', orderid)
+          .groupBy('name', 'quantity', 'price','foodid')
+          .orderBy('foodid')
+          .then(function(result) {
+            cb(null,result);
+          });
+        } else if (result[0].quantity > 1) {
+          knex('order_fooditem')
+          .where('orderid', '=', orderid)
+          .andWhere('foodid', '=', foodid)
+          .decrement('quantity',1)
+          .returning('*').then(function(result){console.log(result)})
+          .then(function() {
+            const qraw = 'name, quantity, quantity * price as price';
+            knex.select(knex.raw(qraw))
+            .from('order_fooditem').innerJoin('fooditem', 'fooditem.id', 'order_fooditem.foodid')
+            .where('orderid', '=', orderid)
+            .groupBy('name', 'quantity', 'price','foodid')
+            .orderBy('foodid')
+            .then(function(result) {
+              cb(null,result);
+            })
+          });
+        } else {
+          knex('order_fooditem')
+          .where('orderid', '=', orderid)
+          .andWhere('foodid', '=', foodid).del().then(function() {
+            const qraw = 'name, quantity, quantity * price as price';
+            knex.select(knex.raw(qraw))
+            .from('order_fooditem').innerJoin('fooditem', 'fooditem.id', 'order_fooditem.foodid')
+            .where('orderid', '=', orderid)
+            .groupBy('name', 'quantity', 'price','foodid')
+            .orderBy('foodid')
+            .then(function(result) {
+              cb(null,result);
+            })
+          });
+        }
+      })
     },
 
     summary: function(orderid, cb) {
-      var qraw = 'name, COUNT(order_food_item.foodid) AS quantity, price, time';
+      const qraw = 'name, quantity, quantity * price as price, quantity * time as time';
       knex.select(knex.raw(qraw))
-      .from('order_food_item').innerJoin('fooditem', 'fooditem.foodid', 'order_food_item.foodid')
+      .from('order_fooditem').innerJoin('fooditem', 'fooditem.id', 'order_fooditem.foodid')
       .where('orderid', '=', orderid)
-      .groupBy('name', 'price', 'time')
+      .groupBy('name', 'quantity', 'price','foodid','time')
+      .orderBy('foodid')
       .then(function(result) {
         cb(null,result);
       });
     },
 
     createOrderid: function(orderid, cb) {
-      knex("orders").where('orderid', '=', orderid)
-      .andWhere('orderid', '=', orderid)
-      .del()
+      knex("orders").select().where('id', '=', orderid)
       .then(function(result) {
-        knex("orders").insert({orderid: orderid}).returning('*')
-        .then(function(result) {
+        if (result.length === 0) {
+          knex("orders").insert({id: orderid}).returning('*')
+          .then(function(result) {
+            cb(null,result);
+          })
+        } else {
           cb(null,result);
-        })
+        }
       });
     },
 
     createOrder: function(orderid, phone, cb) {
-      knex("orders").where('orderid', '=', orderid)
-      .andWhere('orderid', '=', orderid)
-      .del()
+      knex("orders").select().where('id', '=', orderid)
       .then(function(result) {
-        knex("orders").insert({orderid: orderid, phone: phone}).returning('*')
+        knex("orders").update({phone: phone}).returning('*')
         .then(function(result) {
           cb(null, result);
         })
       });
-    },
+     },
 
     logStatus: function(orderid, cb) {
-      knex.select('name').from("order_history")
-      .innerJoin('customer', 'customer.customerid', 'order_history.customerid')
+      knex.select('userid').from("order_history")
       .where('orderid', '=', orderid)
       .then(function(result) {
-        cb(null, result);
+        if (result.length === 0 || result[0].userid === null) {
+          cb(null, result);
+        } else {
+          knex.select('name','phone').from("order_history")
+          .innerJoin('customers', 'customers.id', 'order_history.customerid')
+          .where('orderid', '=', orderid)
+          .then(function(result) {
+            cb(null, result);
+          });
+        }
       });
+    },
+
+    login: function(phone, password, orderid, userid, cb) {
+      knex.select('id').from('customers')
+      .where('phone', '=', phone).andWhere('password', '=', password).returning('*')
+      .then(function(result) {
+        if (result.length === 0) {
+          cb(null, result);
+        } else {
+          const id = result[0].id;
+          knex('order_history').insert({customerid: id, orderid: orderid, userid: userid})
+          .then(function(result) {
+            knex('customers').select('name').where('id', '=', id)
+            .then(function(result) {
+              cb(null, result);
+            })
+          });
+        }
+      })
+    },
+    logout: function(orderid, cb) {
+      knex('order_history').where('orderid','=',orderid).update({userid: null}).returning('*')
+      .then(function(result) {
+        cb(null,result);
+      });
+    },
+    register: function(phone, password, name, cb) {
+      knex('customers').insert({phone: phone, password: password, name: name})
+      .then(function() {
+        cb(null, []);
+      })
     }
+
   };
 }
-
-//databaseHelper(knex, Promise).logStatus('testorder02', console.log);
-
-/////////////////testing/////////////ignore///////////////////////////
-
-
-//databaseHelper(knex, Promise).addCart('K02714',4,console.log);
-//databaseHelper(knex, Promise).removeCart('K02714',2,console.log);
-
-
- // const orderData = {customerid: 1,
- //                    orderid: 'testorder01'};
- //  databaseHelper(knex, Promise).addItemToMenu(orderData);
-
-// const itemList = [{orderid: "abc123", foodid: 2}];
-
