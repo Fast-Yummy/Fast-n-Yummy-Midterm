@@ -1,3 +1,6 @@
+
+
+
 module.exports = function databaseHelper(knex, Promise) {
   return {
     loadMenu: function(cb)
@@ -138,31 +141,45 @@ module.exports = function databaseHelper(knex, Promise) {
           cb(null, result);
         })
       });
-    // },
+     },
 
-    // logStatus: function(orderid, cb) {
-    //   console.log(">>>>>>>>>>>>>>>>");
-    //   knex("fooditem").where('category', '=', orderid).select()
-    //   .then(function(result) {
-    //     cb(null, result);
-    //   });
-    //   // knex.select('name').from("order_history")
-    //   // .innerJoin('customer', 'customer.customerid', 'order_history.customerid')
-    //   // .where('orderid', '=', orderid)
-    //   // .then(function(result) {
-    //   //   console.log(">>>>>>>>>>>>>>>>result:",result);
-    //   //   cb(null, result);
-    //   // });
-    // },
-    // status: function(orderid, cb) {
-    //   knex.select('name').from("order_history")
-    //   .innerJoin('customer', 'customer.customerid', 'order_history.customerid')
-    //   .where('orderid', '=', orderid)
-    //   .then(function(result) {
-    //     console.log(">>>>>>>>>>>>>>>>result:",result);
-    //     cb(null, result);
-    //   });
+    logStatus: function(orderid, cb) {
+      knex.select('userid').from("order_history")
+      .where('orderid', '=', orderid)
+      .then(function(result) {
+        if (result.length === 0 || result[0].userid === null) {
+          cb(null, result);
+        } else {
+          knex.select('name','phone').from("order_history")
+          .innerJoin('customers', 'customers.id', 'order_history.customerid')
+          .where('orderid', '=', orderid)
+          .then(function(result) {
+            cb(null, result);
+          });
+        }
+      });
+    },
 
+    login: function(phone, password, orderid, userid, cb) {
+      knex.select('id').from('customers')
+      .where('phone', '=', phone).andWhere('password', '=', password).returning('*')
+      .then(function(result) {
+        if (result.length === 0) {
+          cb(null, result);
+        } else {
+          knex('order_history').insert({customerid: result[0].id, orderid: orderid, userid: userid})
+          .then(function(result) {
+            cb(null,result);
+          });
+        }
+      })
+    },
+    logout: function(orderid, cb) {
+      knex('order_history').where('orderid','=',orderid).update({userid: null}).returning('*')
+      .then(function(result) {
+        cb(null,result);
+      });
     }
+
   };
 }
