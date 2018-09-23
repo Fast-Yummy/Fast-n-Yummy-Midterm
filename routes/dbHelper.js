@@ -1,6 +1,3 @@
-
-
-
 module.exports = function databaseHelper(knex, Promise) {
   return {
     loadMenu: function(cb)

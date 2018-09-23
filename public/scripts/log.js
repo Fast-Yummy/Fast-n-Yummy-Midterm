@@ -3,10 +3,15 @@ function renderlog(response) {
   const $logoutButton = `<button id="logout" class="nav-button" type="button">Logout</button>`;
   if (response.length === 0 || response[0].userid === null) {
     $("#logContainer").empty();
+    $('.login-welcome').html('')
     $("#logContainer").append($loginButton);
   } else {
     $("#logContainer").empty();
     $("#logContainer").append($logoutButton);
+    $('#loginForm').hide();
+    const name = result[0].name;
+    const $welcome = `Welcome ${name}!`;
+    $('.login-welcome').html('').append($welcome);
     //////  //////  ////////display the name and store the phone number in DOM in header
   }
 }
@@ -40,7 +45,6 @@ $(document).ready(function() {
       data: {orderid: orderid}
       }).then(function() {
         checkLogStatus();
-        $('.login-welcome').html('')
       });
     });
 
@@ -62,11 +66,7 @@ $(document).ready(function() {
         orderid: orderid
       }
     }).then(function(result) {
-      const name = result[0].name;
       checkLogStatus();
-      $('#loginForm').hide();
-      const $welcome = `Welcome ${name}`;
-      $('.login-welcome').html('').append($welcome);
     });
   })
 
@@ -94,42 +94,11 @@ $(document).ready(function() {
     }).then(function() {
       $('#registerContainer').hide();
       $('.welcome').html('');
-      const $welcome = `<p>Welcome ${name}</p>`;
+      const $welcome = `<p>Welcome ${name}!</p>`;
       $('.welcome').append($welcome);
 
     });
   })
 
-
-
-
-
 })
-
-
-
-
-
-
-
-
-
-
-
-
-  // $('#loginForm').hide();
-  // $('#registerForm').hide();
-  // $(".login").click(function() {
-  //   $('#registerForm').hide();
-  //   $('#loginForm').slideUp();
-  //   $('#loginForm').slideDown();
-  // });
-  // $(".register").click(function() {
-  //   $('#loginForm').hide();
-  //   $('#registerForm').slideUp();
-  //   $('#registerForm').slideDown();
-  // });
-
-
-
 
