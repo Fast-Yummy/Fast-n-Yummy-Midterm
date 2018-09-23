@@ -31,17 +31,37 @@ $(document).ready(function() {
   const loadSummary = () => {
     $.ajax('/menu/summary', {
       method: 'GET',
-      data: {
-        orderid: orderid
-      }})
+      data: {orderid: orderid}
+    })
     .then(function(data) {
       renderSummary(data);
       let totalTime = 0;
       for (let item of data) {
         totalTime += item.quantity * item.time;
       }
-      const $hidden = `<input type="hidden" name="totalTime" value="${totalTime}">`;
-      $('#submitform').append($hidden);
+      const $hiddenTime = `<input type="hidden" name="totalTime" value="${totalTime}">`;
+      const $phoneInputForm = `<label for="couponCode">PHONE NUMBER</label>
+          <input
+            type="tel"
+            class="form-control"
+            name="phoneNumber"
+            placeholder="Phone Number"
+            required
+          />`;
+
+      $.ajax({
+        url:'/log/logStatus',
+        method: 'GET',
+        data: {orderid: orderid}
+      }).then(function(response) {
+        if (response.length === 0 || response[0].userid === null) {
+          $('#submitform').append($hiddenTime).append($phoneInputForm);
+        } else {
+          const phone = response[0].phone;
+          const $hiddenPhone = `<input type="hidden" name="totalTime" value="${phone}">`;
+          $('#submitform').append($hiddenTime).append($hiddenPhone);
+        }
+      });
     });
   }
   loadSummary();
