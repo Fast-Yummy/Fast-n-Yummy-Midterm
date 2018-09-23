@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Styles</title>
+    <title>Status</title>
     <% include partials/_styles %>
 
     <!-- Bootstrap -->
@@ -65,7 +65,7 @@
         // Display the result in the element with id="demo"
         document.getElementById("timer").innerHTML = minutes + " min(s) " + seconds + " sec(s)";
 
-        // If the count down is finished, write some text 
+        // If the count down is finished, write some text
         if (distance < 0) {
           clearInterval(x);
           const orderid = $("#sessionID").data("orderid");
@@ -84,7 +84,7 @@
             })
 
           .then(function(data){
-            
+
           })
           document.getElementById("order-text").innerHTML = "Your order is ready!!";
           document.getElementById("timer").innerHTML = "";
