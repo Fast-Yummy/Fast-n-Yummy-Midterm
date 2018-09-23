@@ -1,6 +1,6 @@
 function createMenuItem(data) {
 
-  const id = data.foodid;
+  const id = data.id;
   const name = data.name;
   const price = data.price;
   const img = data.img;
@@ -42,8 +42,8 @@ function renderMenu(menudata) {
 function createCartItem(data) {
   const name = data.name;
   const quantity = data.quantity;
-  const totalPrice = Math.round(quantity * data.price * 100) / 100;
-  const $item = `<p><a>${name}</a><span class="quantity">  ${quantity}</span><span class="price">${totalPrice}</span></p>`;
+  const price = Math.round(data.price * 100) / 100;
+  const $item = `<p><a>${name}</a><span class="quantity">  ${quantity}</span><span class="price">${price}</span></p>`;
   return $item;
 }
 
@@ -52,14 +52,14 @@ function renderCart(data) {
   let totalItem = 0;
   for (let item of data) {
     totalItem = parseInt(totalItem) + parseInt(item.quantity);
-    }
+  }
   const $cartTittle = `<h4>Cart <span class="price"><i class="fa fa-shopping-cart"></i> <b>${totalItem}</b></span></h4>`;
   $('.cartContainer').append($cartTittle);
   let totalPrice = 0;
   for (let item of data) {
     let $item = createCartItem(item);
     $('.cartContainer').append($item);
-    totalPrice += item.price * item.quantity;
+    totalPrice += item.price;
   }
   totalPrice = Math.round(totalPrice * 100) / 100;
   const $total = `<p>Total</p> <div>$${totalPrice}</div>`;
@@ -67,10 +67,10 @@ function renderCart(data) {
 }
 
 $(document).ready(function() {
-  const orderid = $("#sessionID").data("orderid") ;
+  const orderid = $("#sessionID").data("orderid");
   $.ajax("/menu/createorderid", {
     method: 'POST',
-    data: {orderid: orderid}
+    data: {id: orderid}
   });
 
   const loadMenu = () => {
@@ -84,9 +84,7 @@ $(document).ready(function() {
   $("#menuContainer").on('click', '.fa-plus', function() {
 
     let foodid = $(this).parent().parent().attr("id");
-    console.log(foodid);
     const orderid = $("#sessionID").data("orderid") ;
-    console.log(orderid);
     $.ajax("/menu/add",
       { method: 'POST',
       data: {
@@ -95,7 +93,6 @@ $(document).ready(function() {
       }
       }).then(function(response) {
         $('#cartContainer').html("");
-        console.log(response);
         renderCart(response);
       });
   });
@@ -112,8 +109,6 @@ $(document).ready(function() {
         orderid: orderid
       }
       }).then(function(response) {
-
-        console.log(response);
         renderCart(response);
       });
   });
@@ -127,8 +122,6 @@ $(document).ready(function() {
         category: 'breakfast'
       }
     }).then(function(data) {
-      console.log(data);
-
       renderMenu(data);
     })
   });
@@ -141,7 +134,6 @@ $(document).ready(function() {
         category: 'sides'
       }
     }).then(function(data) {
-      console.log(data);
       $('#menuContainer').html("");
       renderMenu(data);
     })

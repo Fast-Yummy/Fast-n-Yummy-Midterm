@@ -1,9 +1,9 @@
 function createSummaryItem(data) {
   const name = data.name;
   const quantity = data.quantity;
-  const totalPrice = Math.round(quantity * data.price * 100) / 100;
+  const price = Math.round(data.price * 100) / 100;
   const totalTime = quantity * data.time;
-  const $item = `<p><a>${name}</a><span class="quantity">  ${quantity}</span><span class="price">${totalPrice}</span></p>`;
+  const $item = `<p><a>${name}</a><span class="quantity">  ${quantity}</span><span class="price">${price}</span></p>`;
   return $item;
 }
 
@@ -17,7 +17,7 @@ function renderSummary(data) {
   $('.summaryContainer').append($tittle);
   let totalPrice = 0;
   for (let item of data) {
-    let $item = createCartItem(item);
+    let $item = createSummaryItem(item);
     $('.summaryContainer').append($item);
     totalPrice += item.price * item.quantity;
   }

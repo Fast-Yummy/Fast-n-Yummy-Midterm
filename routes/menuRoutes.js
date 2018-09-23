@@ -51,7 +51,7 @@ module.exports = (databaseHelper) => {
     })
   });
   menuRoutes.post("/createorderid", (req, res) => {
-    const orderid = req.body.orderid;
+    const orderid = req.body.id;
     databaseHelper.createOrderid(orderid, (error, result) => {
       if (error) throw error;
       else {

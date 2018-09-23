@@ -51,8 +51,9 @@ app.use(express.static("public"));
 
 // Mount all resource routes
 //app.use("/api/users", menuRoutes(knex));
-app.use("/menu", menuRoutes);
 app.use("/log", logRoutes);
+
+app.use("/menu", menuRoutes);
 // Home page
 app.get("/", (req, res) => {
  res.render("index");
