@@ -51,7 +51,7 @@ const smsCustomer = (orderid, time, phoneNumber) => {
 }
 
 const smsReady = (orderid, phoneNumber) => {
-  const message = `Hello your order id ${orderid} from Fast n Yummy is now ready !`
+  const message = `Hello, your order id ${orderid} from Fast n Yummy is now ready !`
   client.messages.create({
     from: "+16474904015", //twilio
     to: `+1${phoneNumber}`, //customer

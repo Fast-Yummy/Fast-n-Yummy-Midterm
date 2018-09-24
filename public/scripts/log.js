@@ -9,10 +9,12 @@ function renderlog(response) {
     $("#logContainer").empty();
     $("#logContainer").append($logoutButton);
     $('#loginForm').hide();
-    const name = result[0].name;
+
+    console.log(">>>>>>>>>>>>>>",response);
+    const name = response[0].name;
+    //const phone = response[0].phone;
     const $welcome = `Welcome ${name}!`;
     $('.login-welcome').html('').append($welcome);
-    //////  //////  ////////display the name and store the phone number in DOM in header
   }
 }
 $(document).ready(function() {
@@ -51,23 +53,38 @@ $(document).ready(function() {
   $("#logContainer").on('click', '#login', function() {
     $('#loginForm').slideDown();
   })
+
+    $('#errorEmpty').hide();
+    $('#errorPhone').hide();
+
   $("#loginForm").on('submit', function(event) {
+    $('#errorEmpty').hide();
+    $('#errorPhone').hide();
     event.preventDefault();
+    // $('#errorEmpty').slideUp();
+    // $('#errorPhone').slideUp();
     const info = $(this).serialize();
     const n = info.indexOf("&password");
     const phone = info.slice(6,n);
     const password = info.slice(n+10);
-    $.ajax({
-      url:'/log/login',
-      method: 'POST',
-      data: {
-        phone:phone,
-        password:password,
-        orderid: orderid
-      }
-    }).then(function(result) {
-      checkLogStatus();
-    });
+    if (info.length < 17 || phone.length < 0 || password.length < 0) {
+      $('#errorEmpty').slideDown();
+    } else {
+      $.ajax({
+        url:'/log/login',
+        method: 'POST',
+        data: {
+          phone: phone,
+          password: password,
+          orderid: orderid
+        }
+      }).then(function(result) {
+        if (result.length === 0) {
+          $('#errorPhone').slideDown();
+        }
+        checkLogStatus();
+      });
+    }
   })
 
   $('#registerForm').hide();
