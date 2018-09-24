@@ -67,7 +67,10 @@ app.get("/home", (req, res) => {
 
 //Menu Page
 app.get("/menu", (req, res) => {
-  let templateVars = {orderid: req.session.order_id};
+  const orderid = generateRandomString(); //Added by Suganthi
+  req.session.order_id = orderid; //Added by Suganthi
+  let templateVars = {orderid: orderid}; //Added by Suganthi
+  //let templateVars = {orderid: req.session.order_id}; //Commented by Suganthi
   res.render("menu", templateVars);
 });
 

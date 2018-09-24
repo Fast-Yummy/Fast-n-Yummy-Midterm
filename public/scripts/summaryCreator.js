@@ -3,7 +3,7 @@ function createSummaryItem(data) {
   const quantity = data.quantity;
   const price = Math.round(data.price * 100) / 100;
   const totalTime = quantity * data.time;
-  const $item = `<p><a>${name}</a><span class="quantity">  ${quantity}</span><span class="price">${price}</span></p>`;
+  const $item = `<p><a href="/">${name}<span class="quantity">  ${quantity}</span></a><span class="price">${price}</span></p>`;
   return $item;
 }
 

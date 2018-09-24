@@ -52,23 +52,52 @@ function createCartItem(data) {
 function renderCart(data) {
   $('.cartContainer').html("");
   let totalItem = 0;
-  for (let item of data) {
-    totalItem = parseInt(totalItem) + parseInt(item.quantity);
-  }
+  if (data != null) { //added by Suganthi
+    for (let item of data) {
+      totalItem = parseInt(totalItem) + parseInt(item.quantity);
+    }
+  } //added by Suganthi
+
+  jQuery.fn.visible = function() { //added by Suganthi
+    return this.css('visibility', 'visible'); //added by Suganthi
+  }; //added by Suganthi
+
+  jQuery.fn.invisible = function() { //added by Suganthi
+    return this.css('visibility', 'hidden'); //added by Suganthi
+  }; //added by Suganthi
+
+  if (totalItem === 0) { //added by Suganthi
+    $("#submit-button").invisible(); //added by Suganthi
+  } //added by Suganthi
+
   const $cartTittle = `<h4>Cart <span class="price"><i class="fa fa-shopping-cart"></i> <b>${totalItem}</b></span></h4>`;
   $('.cartContainer').append($cartTittle);
   let totalPrice = 0;
-  for (let item of data) {
-    let $item = createCartItem(item);
-    $('.cartContainer').append($item);
-    totalPrice += item.price;
-  }
+  if (data != null) { //added by Suganthi
+    for (let item of data) {
+      let $item = createCartItem(item);
+      $('.cartContainer').append($item);
+      totalPrice += item.price;
+    }
+  } //added by Suganthi
   totalPrice = Math.round(totalPrice * 100) / 100;
   const $total = `<p>Total</p> <div>$${totalPrice}</div>`;
   $('.cartContainer').append($total);
 }
 
 $(document).ready(function() {
+  renderCart(null); //added by Suganthi
+  
+  jQuery.fn.visible = function() { //added by Suganthi
+    return this.css('visibility', 'visible'); //added by Suganthi
+  }; //added by Suganthi
+
+  jQuery.fn.invisible = function() { //added by Suganthi
+    return this.css('visibility', 'hidden'); //added by Suganthi
+  }; //added by Suganthi
+  
+  $("#submit-button").invisible(); //added by Suganthi
+
   const orderid = $("#sessionID").data("orderid");
   $.ajax("/menu/createorderid", {
     method: 'POST',
@@ -84,6 +113,8 @@ $(document).ready(function() {
   loadMenu();
 
   $("#menuContainer").on('click', '.fa-plus', function() {
+    
+    $("#submit-button").visible(); //added by Suganthi
 
     let foodid = $(this).parent().parent().attr("id");
     const orderid = $("#sessionID").data("orderid") ;
