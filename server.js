@@ -84,6 +84,7 @@ app.get("/confirmation", (req, res) => {
 app.post("/order",(req,res) => {
   const totalTime = req.body.totalTime;
   const phoneNumber = req.body.phoneNumber;
+  console.log(phoneNumber);
   twilio.restaurant(`${req.session.order_id}`, '+16477864414');
   twilio.customer(`${req.session.order_id}`, totalTime, `${req.body.phoneNumber}`);
   // databaseHelper.createOrder(req.session.order_id, phoneNumber, totalTime, (result) => {

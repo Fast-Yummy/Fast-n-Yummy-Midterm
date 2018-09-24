@@ -22,7 +22,7 @@
                <h3>Order Number: <b><%=orderid%></b> </h3>
                <br />
                <h2 id="order-text">
-                  Your order will be ready in: 
+                  Your order will be ready in:
                   <p id="timer"></p>
                </h2>
                <br />
@@ -64,7 +64,7 @@
         }
 
         var totalTime = getParameterByName("totalTime");
-        var countDownDate = new Date().getTime() + (totalTime*0.1) * 60000;
+        var countDownDate = new Date().getTime() + (totalTime) * 60000;
 
         var x = setInterval(function () {
           var now = new Date().getTime();
@@ -88,7 +88,8 @@
                 method: 'POST',
                 data: {
                   orderid: orderid,
-                  phonenbr: phonenbr
+                  phonenbr: phonenbr,
+                  totalTime: totalTime
                 }
               })
               .then(function (data) {
