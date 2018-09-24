@@ -12,6 +12,7 @@ exports.up = function(knex, Promise) {
     knex.schema.createTable('orders', function(table){
       table.string('id').primary(); //browser cookie session ID is used for orderID
       table.string('phone');
+      table.integer('time').unsigned();
     }),
     knex.schema.createTable('order_fooditem', function(table){
       table.string('orderid').references('id').inTable('orders');

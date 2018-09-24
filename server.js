@@ -77,16 +77,47 @@ app.get("/confirmation", (req, res) => {
   res.render("confirmation", templateVars);
 });
 
+
+app.post("/order",(req,res) => {
+  const totalTime = req.body.totalTime;
+  const phoneNumber = req.body.phoneNumber;
+  twilio.restaurant(`${req.session.order_id}`, '+16477864414');
+  twilio.customer(`${req.session.order_id}`, totalTime, `${req.body.phoneNumber}`);
+  // databaseHelper.createOrder(req.session.order_id, phoneNumber, totalTime, (result) => {
+  //   res.redirect("/status");
+  // });
+  res.redirect(url.format({
+    pathname: "/status",
+    query: {
+      phoneNumber: phoneNumber,
+      totalTime: totalTime
+    }
+  }));
+
+
+})
+
 //Status Page
 app.get("/status", (req, res) => {
   const phoneNumber = req.query.phoneNumber;
   const totalTime = req.query.totalTime;
-  let templateVars = {orderid: req.session.order_id,
-    phoneNumber: phoneNumber,
-    totalTime: totalTime
-  };
+  const orderid = req.session.order_id;
   req.session = null;
-  res.render("status", templateVars);
+  // databaseHelper.searchOrder(orderid, (result) => {
+  //   const phoneNumber = result[0].phone;
+  //   const totalTime = result[0].time;
+  //   const templateVars = {orderid: orderid,
+  //     phoneNumber: phoneNumber,
+  //     totalTime: totalTime
+  //   };
+  //   console.log('>>>>>>>>>>>>>templateVars',orderid, phoneNumber,totalTime);
+  //   res.render("status", templateVars);
+  // });
+     const templateVars = {orderid: orderid,
+      phoneNumber: phoneNumber,
+      totalTime: totalTime
+    };
+    res.render("status", templateVars);
 });
 
 app.post("/status", (req,res) => {
@@ -96,20 +127,6 @@ app.post("/status", (req,res) => {
 app.get("/cart", (req, res) => {
  res.render("cart");
 });
-
-app.post("/order",(req,res) => {
-  const totalTime = req.body.totalTime;
-  const phoneNumber = req.body.phoneNumber;
-  twilio.restaurant(`${req.session.order_id}`, '+16477864414');
-  twilio.customer(`${req.session.order_id}`, totalTime, `${req.body.phoneNumber}`);
-  res.redirect(url.format({
-    pathname: "/status",
-    query: {
-      phoneNumber: phoneNumber,
-      totalTime: totalTime
-    }
-  }));
-})
 
 
 function generateRandomString() {

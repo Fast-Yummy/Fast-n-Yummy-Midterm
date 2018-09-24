@@ -47,7 +47,6 @@ $(document).ready(function() {
       data: {orderid: orderid}
       }).then(function() {
         checkLogStatus();
-        //////////clear phone
       });
     });
 
