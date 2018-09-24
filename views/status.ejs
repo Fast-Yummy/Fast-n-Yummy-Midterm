@@ -41,60 +41,64 @@
             <hr />
          </div>
       </main>
-      <footer class="footer">
-         <% include partials/_footer %>
-      </footer>
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-      <!-- Include all compiled plugins (below), or include individual files as needed -->
-      <script src="js/bootstrap.min.js"></script>
-      <script>
-         // Set the date we are counting down to
 
-         function getParameterByName(name, url) {
-           if (!url) url = window.location.href;
-           name = name.replace(/[\[\]]/g, '\\$&');
-           var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-             results = regex.exec(url);
-           if (!results) return null;
-           if (!results[2]) return '';
-           return decodeURIComponent(results[2].replace(/\+/g, ' '));
-         }
-         
-         var totalTime = getParameterByName("totalTime");
-         var countDownDate = new Date().getTime() + (totalTime*0.1) * 60000;
-         
-         var x = setInterval(function () {
-           var now = new Date().getTime();
-           var distance = countDownDate - now;
-           var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-           var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-           var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-           var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-           
-           if (hours === 0 ) {
-             document.getElementById("timer").innerHTML = minutes + " min(s) " + seconds + " sec(s)";
-           } else if (hours > 0) {
-             document.getElementById("timer").innerHTML = hours + " hour(s) " + minutes + " min(s) " + seconds + " sec(s)";
-           }
-         
-           if (distance < 0) {
-             clearInterval(x);
-             const orderid = $("#sessionID").data("orderid");
-             const phonenbr = getParameterByName("phoneNumber");
-             $.ajax("/status", {
-                 method: 'POST',
-                 data: {
-                   orderid: orderid,
-                   phonenbr: phonenbr
-                 }
-               })
-               .then(function (data) {
-               })
-             document.getElementById("order-text").innerHTML = "Your order is ready to pickup!!";
-             document.getElementById("timer").innerHTML = "";
-           };
-         }, 1000);
-         
-      </script>
-   </body>
+    <footer class="footer">
+     <% include partials/_footer %>
+    </footer>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <script>
+        // Set the date we are counting down to
+
+        function getParameterByName(name, url) {
+          if (!url) url = window.location.href;
+          name = name.replace(/[\[\]]/g, '\\$&');
+          var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+            results = regex.exec(url);
+          if (!results) return null;
+          if (!results[2]) return '';
+          return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+
+        var totalTime = getParameterByName("totalTime");
+        var countDownDate = new Date().getTime() + (totalTime*0.1) * 60000;
+
+        var x = setInterval(function () {
+          var now = new Date().getTime();
+          var distance = countDownDate - now;
+          var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+          var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+          var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+          if (hours === 0 ) {
+            document.getElementById("timer").innerHTML = minutes + " min(s) " + seconds + " sec(s)";
+          } else if (hours > 0) {
+            document.getElementById("timer").innerHTML = hours + " hour(s) " + minutes + " min(s) " + seconds + " sec(s)";
+          }
+
+          if (distance < 0) {
+            clearInterval(x);
+            const orderid = $("#sessionID").data("orderid");
+            const phonenbr = getParameterByName("phoneNumber");
+            $.ajax("/status", {
+                method: 'POST',
+                data: {
+                  orderid: orderid,
+                  phonenbr: phonenbr
+                }
+              })
+              .then(function (data) {
+              })
+            document.getElementById("order-text").innerHTML = "Your order is ready to pickup!!";
+            document.getElementById("timer").innerHTML = "";
+          };
+        }, 1000);
+
+     </script>
+  </body>
+
 </html>

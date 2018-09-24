@@ -59,16 +59,6 @@ module.exports = (databaseHelper) => {
       }
     })
   });
-  menuRoutes.post("/createorder", (req, res) => {
-    const orderid = req.body.orderid;
-    const phone = req.body.phone;
-    databaseHelper.createOrderid(orderid, (error, result) => {
-      if (error) throw error;
-      else {
-        res.status(200);
-      }
-    })
-  });
   return menuRoutes;
 }
 

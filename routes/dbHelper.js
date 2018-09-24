@@ -130,13 +130,17 @@ module.exports = function databaseHelper(knex, Promise) {
       });
     },
 
-    createOrder: function(orderid, phone, cb) {
-      knex("orders").select().where('id', '=', orderid)
+    createOrder: function(orderid, phone, time, cb) {
+      knex("orders").where('id', '=', orderid).update({phone: phone, time: time}).returning('*')
       .then(function(result) {
-        knex("orders").update({phone: phone}).returning('*')
-        .then(function(result) {
-          cb(null, result);
-        })
+        cb(result);
+      });
+     },
+
+     searchOrder: function(orderid, cb) {
+      knex("orders").select('phone','time').where('id', '=', orderid)
+      .then(function(result) {
+        cb(result);
       });
      },
 

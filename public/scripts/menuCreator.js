@@ -117,7 +117,6 @@ $(document).ready(function() {
     $("#submit-button").visible(); //added by Suganthi
 
     let foodid = $(this).parent().parent().attr("id");
-    const orderid = $("#sessionID").data("orderid") ;
     $.ajax("/menu/add",
       { method: 'POST',
       data: {
@@ -133,7 +132,6 @@ $(document).ready(function() {
   $("#menuContainer").on('click', '.fa-minus', function() {
     let foodid = $(this).parent().parent().attr("id");
     console.log(foodid);
-    const orderid = $("#sessionID").data("orderid") ;
     console.log(orderid);
     $.ajax("/menu/remove",
       { method: 'POST',
